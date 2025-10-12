@@ -1,40 +1,33 @@
 package com.example.demo.Models;
 
-public class Room {
-    private int id;
-    private String name;
-    private int capacity;
-    private String location;
+import java.util.List;
 
-    public Room(int id, String name, int capacity, String location) {
-        this.id = id;
-        this.name = name;
-        this.capacity = capacity;
-        this.location = location;
-    }
-    
-    public int getId() {
-        return id;
-    }
-    public void setId(int id) {
-        this.id = id;
-    }
-    public String getName() {
-        return name;
-    }
-    public void setName(String name) {
-        this.name = name;
-    }
-    public int getCapacity() {
-        return capacity;
-    }
-    public void setCapacity(int capacity) {
-        this.capacity = capacity;
-    }
-    public String getLocation() {
-        return location;
-    }
-    public void setLocation(String location) {
-        this.location = location;
-    }
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Entity
+@Table(name = "rooms")
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+public class Room {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
+
+    private String name;
+    private Integer capacity;
+    private String location;
+    private String status;
+
+    @OneToMany(mappedBy = "room", fetch = FetchType.LAZY)
+    public List<Reservation> reservations;
 }
