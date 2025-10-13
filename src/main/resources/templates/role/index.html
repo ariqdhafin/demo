@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <a href="http://localhost:9000/role/form">New Data</a>
+    <table>
+        <thead>
+            <th>ID</th>
+            <th>NAME</th>
+            <th>ACTION</th>
+        </thead>
+        <tbody>
+            <tr th:each="role : ${roles}">
+                <td th:text="${role.id}"></td>
+                <td th:text="${role.name}"></td>
+                <td>
+                    <a th:href="@{'/role/edit/' + ${role.id}}">
+                        <button type="button">Edit</button>
+                    </a>
+                    <form th:action="@{'/role/delete/' + ${role.id}}" method="post">
+                        <button type="submit" onclick="return confirm('delete?')">Delete</button>
+                    </form>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+</html>

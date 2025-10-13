@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form th:action="@{/role/save}" th:object="${roleDTO}" method="post">
+        <div>
+            <label>ID</label>
+            <input th:field="*{id}" type="text">
+        </div>
+        <div>
+            <label>NAME</label>
+            <input th:field="*{name}" type="text">
+        </div>
+        <button type="submit">Save Changes</button>
+    </form>
+</body>
+</html>
