@@ -45,7 +45,6 @@ public class UserService {
         return userRepository.findById(user.getId()).isPresent();
     }
 
-    // Delete a user by ID
     public Boolean remove(Integer id) {
         userRepository.deleteById(id);
         return !userRepository.findById(id).isPresent();

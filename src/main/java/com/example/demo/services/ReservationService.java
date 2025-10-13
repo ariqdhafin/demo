@@ -67,4 +67,9 @@ public class ReservationService {
 
         return reservationRepository.findById(reservation.getId()).isPresent();
     }
+
+    public Boolean remove(Integer id) {
+        reservationRepository.deleteById(id);
+        return !reservationRepository.findById(id).isPresent();
+    }
 }
