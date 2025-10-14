@@ -10,8 +10,8 @@ import lombok.NoArgsConstructor;
 
 public class ReservationDTO {
     private Integer id;
-    private Integer employeeid;
-    private Integer roomid;
+    private Integer employeeId;
+    private Integer roomId;
     private java.sql.Date submitDate;
     private String purpose;
     private java.sql.Date reservationDate;

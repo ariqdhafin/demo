@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <a href="http://localhost:9000/employee/form">New Data</a>
+    <table>
+        <thead>
+            <th>ID</th>
+            <th>NAME</th>
+            <th>ADDRESS</th>
+            <th>EMAIL</th>
+            <th>POSITION</th>
+            <th>MANAGER ID</th>
+        </thead>
+        <tbody>
+            <tr th:each="employee : ${employees}">
+                <td th:text="${employee.id}"></td>
+                <td th:text="${employee.name}"></td>
+                <td th:text="${employee.address}"></td>
+                <td th:text="${employee.email}"></td>
+                <td th:text="${employee.position}"></td>
+                <td th:text="${employee.manager != null ? employee.manager.Id : '-' }"></td>
+                <td>
+                    <a th:href="@{'/employee/edit/' + ${employee.id}}">
+                        <button type="button">Edit</button>
+                    </a>
+                    <form th:action="@{'/employee/delete/' + ${employee.id}}" method="post">
+                        <button type="submit" >Delete</button>
+                    </form>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+</html>

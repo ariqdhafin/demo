@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DEMO</title>
+</head>
+<body>
+    <form th:action="@{/reservation/save}" th:object="${reservation}" method="post">
+        <div>
+            <label>ID</label>
+            <input th:field="*{id}" type="text">
+        </div>
+        <div>
+            <label>EMPLOYEE ID</label>
+            <input th:field="*{employeeid}" type="text">
+        </div>
+        <div>
+            <label>ROOM ID</label>
+            <input th:field="*{roomId}" type="text">
+        </div>
+        <div>
+            <label>SUBMIT DATE</label>
+            <input th:field="*{submitDate}" type="text">
+        </div>
+        <div>
+            <label>PURPOSE</label>
+            <input th:field="*{purpose}" type="text">
+        </div>
+        <div>
+            <label>RESERVATION DATE</label>
+            <input th:field="*{reservationDate}" type="text">
+        </div>
+        <div>
+            <label>START TIME</label>
+            <input th:field="*{startTIme}" type="text">
+        </div>
+        <div>
+            <label>END TIME</label>
+            <input th:field="*{endTime}" type="text">
+        </div>
+        <div>
+            <label>APPROVAL STATUS</label>
+            <input th:field="*{approvalStatus}" type="text">
+        </div>
+        <div>
+            <label>APPROVED BY</label>
+            <input th:field="*{approvedBy}" type="text">
+        </div>
+        <button type="submit">Save Changes</button>
+    </form>
+</body>
+</html>

@@ -6,7 +6,7 @@
     <title>DEMO</title>
 </head>
 <body>
-    <form th:action="@{/role/save}" th:object="${roleDTO}" method="post">
+    <form th:action="@{/room/save}" th:object="${roomDTO}" method="post">
         <div>
             <label>ID</label>
             <input th:field="*{id}" type="text">
@@ -14,6 +14,18 @@
         <div>
             <label>NAME</label>
             <input th:field="*{name}" type="text">
+        </div>
+        <div>
+            <label>CAPACITY</label>
+            <input th:field="*{capacity}" type="text">
+        </div>
+        <div>
+            <label>LOCATION</label>
+            <input th:field="*{location}" type="text">
+        </div>
+        <div>
+            <label>STATUS</label>
+            <input th:field="*{status}" type="text">
         </div>
         <button type="submit">Save Changes</button>
     </form>

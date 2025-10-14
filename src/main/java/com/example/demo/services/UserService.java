@@ -3,6 +3,7 @@ package com.example.demo.services;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.example.demo.Models.Role;
 import com.example.demo.Models.User;
@@ -10,6 +11,7 @@ import com.example.demo.Models.dto.UserDTO;
 import com.example.demo.repository.RoleRepository;
 import com.example.demo.repository.UserRepository;
 
+@Service
 public class UserService {
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
@@ -34,7 +36,7 @@ public class UserService {
         user.setUsername(userDTO.getUsername());
         user.setPassword(userDTO.getPassword());
 
-        Role role = roleRepository.findById(userDTO.getRoleid()).orElse(null);
+        Role role = roleRepository.findById(userDTO.getRoleId()).orElse(null);
         if (role == null) {
             return false; 
         }

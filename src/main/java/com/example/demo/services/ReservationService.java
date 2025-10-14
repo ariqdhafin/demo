@@ -3,6 +3,7 @@ package com.example.demo.services;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.example.demo.Models.Employee;
 import com.example.demo.Models.Reservation;
@@ -12,6 +13,7 @@ import com.example.demo.repository.EmployeeRepository;
 import com.example.demo.repository.ReservationRepository;
 import com.example.demo.repository.RoomRepository;
 
+@Service
 public class ReservationService {
     private final ReservationRepository reservationRepository;
     private final EmployeeRepository employeeRepository;
@@ -36,13 +38,13 @@ public class ReservationService {
         Reservation reservation = new Reservation();
         reservation.setId(reservationDTO.getId());
 
-        Employee employee = employeeRepository.findById(reservationDTO.getEmployeeid()).orElse(null);
+        Employee employee = employeeRepository.findById(reservationDTO.getEmployeeId()).orElse(null);
         if (employee == null) {
             return false; 
         }
         reservation.setEmployee(employee);
 
-        Room room = roomRepository.findById(reservationDTO.getRoomid()).orElse(null);
+        Room room = roomRepository.findById(reservationDTO.getRoomId()).orElse(null);
         if (room == null) {
             return false; 
         }

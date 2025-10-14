@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DEMO</title>
+</head>
+<body>
+    <form th:action="@{/user/save}" th:object="${userDTO}" method="post">
+        <div>
+            <label>ID</label>
+            <input th:field="*{id}" type="text">
+        </div>
+        <div>
+            <label>USERNAME</label>
+            <input th:field="*{username}" type="text">
+        </div>
+        <div>
+            <label>PASSWORD</label>
+            <input th:field="*{password}" type="text">
+        </div>
+        <div>
+            <label>ROLE ID</label>
+            <input th:field="*{roleId}" type="text">
+        </div>
+        <button type="submit">Save Changes</button>
+    </form>
+</body>
+</html>

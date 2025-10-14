@@ -32,7 +32,7 @@ public class Employee {
     private String position;
 
     @ManyToOne
-    @JoinColumn(name = "managerid", referencedColumnName = "id")
+    @JoinColumn(name = "managerId", referencedColumnName = "id")
     private Employee manager;
 
     @OneToMany(mappedBy = "employee", fetch = FetchType.LAZY)

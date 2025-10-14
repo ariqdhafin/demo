@@ -6,22 +6,28 @@
     <title>Document</title>
 </head>
 <body>
-    <a href="http://localhost:9000/role/form">New Data</a>
+    <a href="http://localhost:9000/room/form">New Data</a>
     <table>
         <thead>
             <th>ID</th>
             <th>NAME</th>
+            <th>CAPACITY</th>
+            <th>LOCATION</th>
+            <th>STATUS</th>
             <th>ACTION</th>
         </thead>
         <tbody>
-            <tr th:each="role : ${roles}">
-                <td th:text="${role.id}"></td>
-                <td th:text="${role.name}"></td>
+            <tr th:each="room : ${rooms}">
+                <td th:text="${room.id}"></td>
+                <td th:text="${room.name}"></td>
+                <td th:text="${room.capacity}"></td>
+                <td th:text="${room.location}"></td>
+                <td th:text="${room.status}"></td>
                 <td>
-                    <a th:href="@{'/role/edit/' + ${role.id}}">
+                    <a th:href="@{'/room/edit/' + ${room.id}}">
                         <button type="button">Edit</button>
                     </a>
-                    <form th:action="@{'/role/delete/' + ${role.id}}" method="post">
+                    <form th:action="@{'/room/delete/' + ${room.id}}" method="post">
                         <button type="submit" >Delete</button>
                     </form>
                 </td>

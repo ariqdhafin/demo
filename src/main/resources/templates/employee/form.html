@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DEMO</title>
+</head>
+<body>
+    <form th:action="@{/employee/save}" th:object="${employeeDTO}" method="post">
+        <div>
+            <label>ID</label>
+            <input th:field="*{id}" type="text">
+        </div>
+        <div>
+            <label>NAME</label>
+            <input th:field="*{name}" type="text">
+        </div>
+        <div>
+            <label>ADDRESS</label>
+            <input th:field="*{address}" type="text">
+        </div>
+        <div>
+            <label>EMAIL</label>
+            <input th:field="*{email}" type="text">
+        </div>
+        <div>
+            <label>POSITION</label>
+            <input th:field="*{position}" type="text">
+        </div>
+        <div>
+            <label>MANAGER ID</label>
+            <input th:field="*{managerid}" type="text">
+        </div>
+        <button type="submit">Save Changes</button>
+    </form>
+</body>
+</html>

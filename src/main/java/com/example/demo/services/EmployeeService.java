@@ -35,8 +35,8 @@ public class EmployeeService {
         employee.setEmail(employeeDTO.getEmail());
         employee.setPosition(employeeDTO.getPosition());
 
-        if (employeeDTO.getManagerid() != null) {
-            Employee manager = employeeRepository.findById(employeeDTO.getManagerid()).orElse(null);
+        if (employeeDTO.getManagerId() != null) {
+            Employee manager = employeeRepository.findById(employeeDTO.getManagerId()).orElse(null);
             if (manager == null) {
                 return false; 
             }

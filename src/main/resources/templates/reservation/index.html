@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <a href="http://localhost:9000/reservation/form">New Data</a>
+    <table>
+        <thead>
+            <th>ID</th>
+            <th>EmployeeId</th>
+            <th>roomId</th>
+            <th>submitDate</th>
+            <th>purpose</th>
+            <th>reservationDate</th>
+            <th>startTime</th>
+            <th>endTime</th>
+            <th>approvalStatus</th>
+            <th>approvedBy</th>
+        </thead>
+        <tbody>
+            <tr th:each="reservation : ${reservations}">
+                <td th:text="${reservation.id}"></td>
+                <td th:text="${reservation.employeeId}"></td>
+                <td th:text="${reservation.roomId}"></td>
+                <td th:text="${reservation.submitDate}"></td>
+                <td th:text="${reservation.purpose}"></td>
+                <td th:text="${reservation.reservationDate}"></td>
+                <td th:text="${reservation.startTime}"></td>
+                <td th:text="${reservation.endTime}"></td>
+                <td th:text="${reservation.approvalStatus}"></td>
+                <td th:text="${reservation.approvedBy}"></td>
+                <td>
+                    <a th:href="@{'/reservation/edit/' + ${reservation.id}}">
+                        <button type="button">Edit</button>
+                    </a>
+                    <form th:action="@{'/reservation/delete/' + ${reservation.id}}" method="post">
+                        <button type="submit" >Delete</button>
+                    </form>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+</html>

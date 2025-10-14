@@ -26,7 +26,7 @@ public class Reservation {
     private Employee employee;
 
     @ManyToOne
-    @JoinColumn(name = "roomid", referencedColumnName = "id")
+    @JoinColumn(name = "roomId", referencedColumnName = "id")
     private Room room;
 
     private java.sql.Date submitDate;
