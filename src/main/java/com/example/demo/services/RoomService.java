@@ -18,12 +18,12 @@ public class RoomService {
         this.roomRepository = roomRepository;
     }
 
-    public List<Room> getAll(){
-        return roomRepository.findAll();
+    public List<RoomDTO> getAll(){
+        return roomRepository.getAll();
     }
 
-    public Room get(Integer id){
-        return roomRepository.findById(id).orElse(null);
+    public RoomDTO get(Integer id){
+        return roomRepository.get(id);
     }
 
     public Boolean save(RoomDTO roomdto){

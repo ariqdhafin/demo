@@ -24,7 +24,7 @@
                 <td th:text="${room.location}"></td>
                 <td th:text="${room.status}"></td>
                 <td>
-                    <a th:href="@{'/room/edit/' + ${room.id}}">
+                    <a th:href="@{'/room/form/' + ${room.id}}">
                         <button type="button">Edit</button>
                     </a>
                     <form th:action="@{'/room/delete/' + ${room.id}}" method="post">
