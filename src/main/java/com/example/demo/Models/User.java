@@ -6,7 +6,6 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.MapsId;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
@@ -31,7 +30,6 @@ public class User {
     private Role role;
 
     @OneToOne
-    @MapsId 
-    @JoinColumn(name = "id") 
+    @JoinColumn(name = "employeeId") 
     private Employee employee;
 }

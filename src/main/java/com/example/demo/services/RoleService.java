@@ -18,12 +18,12 @@ public class RoleService {
         this.roleRepository = roleRepository;
     }
 
-    public List<Role> getAll(){
-        return roleRepository.findAll();
+    public List<RoleDTO> getAll(){
+        return roleRepository.getAll();
     }
 
-    public Role get(Integer id){
-        return roleRepository.findById(id).orElse(null);
+    public RoleDTO get(Integer id){
+        return roleRepository.get(id);
     }
 
     public Boolean save(RoleDTO roledto){

@@ -10,28 +10,28 @@
     <table>
         <thead>
             <th>ID</th>
-            <th>EmployeeId</th>
-            <th>roomId</th>
-            <th>submitDate</th>
-            <th>purpose</th>
-            <th>reservationDate</th>
-            <th>startTime</th>
-            <th>endTime</th>
-            <th>approvalStatus</th>
-            <th>approvedBy</th>
+            <th>EMPLOYEE ID</th>
+            <th>ROOM ID</th>
+            <th>SUBMIT DATE</th>
+            <th>PURPOSE</th>
+            <th>RESERVATION DATE</th>
+            <th>START TIME</th>
+            <th>END TIME</th>
+            <th>APPROVAL STATUS</th>
+            <th>APPROVED BY</th>
         </thead>
         <tbody>
             <tr th:each="reservation : ${reservations}">
                 <td th:text="${reservation.id}"></td>
-                <td th:text="${reservation.employeeId}"></td>
-                <td th:text="${reservation.roomId}"></td>
+                <td th:text="${reservation.employee.id}"></td>
+                <td th:text="${reservation.room.id}"></td>
                 <td th:text="${reservation.submitDate}"></td>
                 <td th:text="${reservation.purpose}"></td>
                 <td th:text="${reservation.reservationDate}"></td>
                 <td th:text="${reservation.startTime}"></td>
                 <td th:text="${reservation.endTime}"></td>
                 <td th:text="${reservation.approvalStatus}"></td>
-                <td th:text="${reservation.approvedBy}"></td>
+                <td th:text="${reservation.approvedBy.id}"></td>
                 <td>
                     <a th:href="@{'/reservation/edit/' + ${reservation.id}}">
                         <button type="button">Edit</button>

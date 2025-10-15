@@ -49,6 +49,17 @@ public class EmployeeService {
     }
 
     public Boolean remove(Integer id) {
+        Employee employee = employeeRepository.findById(id).orElse(null);
+        if (employee != null){
+            List<Employee> listEmployees = employeeRepository.findByManager(employee.getManager());
+            for(Employee le: listEmployees){
+                le.setManager(null);
+            }
+            if(employee.getUser() != null){
+                employee.getUser().setEmployee(null);
+                employee.setUser(null);
+            }
+        }
         employeeRepository.deleteById(id);
         return !employeeRepository.findById(id).isPresent();
     }

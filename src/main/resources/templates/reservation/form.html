@@ -6,14 +6,14 @@
     <title>DEMO</title>
 </head>
 <body>
-    <form th:action="@{/reservation/save}" th:object="${reservation}" method="post">
+    <form th:action="@{/reservation/save}" th:object="${reservationDTO}" method="post">
         <div>
             <label>ID</label>
             <input th:field="*{id}" type="text">
         </div>
         <div>
             <label>EMPLOYEE ID</label>
-            <input th:field="*{employeeid}" type="text">
+            <input th:field="*{employeeId}" type="text">
         </div>
         <div>
             <label>ROOM ID</label>
@@ -33,7 +33,7 @@
         </div>
         <div>
             <label>START TIME</label>
-            <input th:field="*{startTIme}" type="text">
+            <input th:field="*{startTime}" type="text">
         </div>
         <div>
             <label>END TIME</label>

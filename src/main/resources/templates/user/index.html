@@ -13,13 +13,15 @@
             <th>USERNAME</th>
             <th>PASSWORD</th>
             <th>ROLE ID</th>
+            <th>EMPLOYEE ID</th>
         </thead>
         <tbody>
             <tr th:each="user : ${users}">
                 <td th:text="${user.id}"></td>
                 <td th:text="${user.username}"></td>
-                <td th:text="${user.password}"></td>\
-                <td th:text="${user.role != null ? user.role.id : '-' }"></td>
+                <td th:text="${user.password}"></td>
+                <td th:text="${user.role.id}"></td>
+                <td th:text="${user.employee.id}"></td>
                 <td>
                     <a th:href="@{'/user/edit/' + ${user.id}}">
                         <button type="button">Edit</button>

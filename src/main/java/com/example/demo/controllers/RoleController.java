@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.example.demo.Models.Role;
 import com.example.demo.Models.dto.RoleDTO;
 import com.example.demo.services.RoleService;
 
@@ -29,9 +28,14 @@ public class RoleController {
         return "role/index";
     }
 
-    @GetMapping("form")
-    public String form(Model model) {
-        model.addAttribute("roleDTO", new RoleDTO());
+    @GetMapping(value = {"form", "form/{id}"})
+    public String form(Model model, @PathVariable(required = false) Integer id) {
+        if (id != null){
+            model.addAttribute("roleDTO", roleService.get(id));
+        } else {
+            model.addAttribute("roleDTO", new RoleDTO());
+        }
+        
         return "role/form";
     }
 
@@ -43,18 +47,6 @@ public class RoleController {
             return "redirect:/role";
         }
         return "role/form";
-    }
-
-    @GetMapping("edit/{id}") 
-    public String edit(@PathVariable Integer id, Model model) { 
-        Role role = roleService.get(id);
-        RoleDTO roleDTO = new RoleDTO();
-
-        roleDTO.setId(role.getId());
-        roleDTO.setName(role.getName());
-
-        model.addAttribute("roleDTO", roleDTO); 
-        return "role/form"; 
     }
 
     @PostMapping("delete/{id}") 

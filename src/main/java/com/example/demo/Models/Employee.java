@@ -2,6 +2,7 @@ package com.example.demo.Models;
 
 import java.util.List;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -35,7 +36,7 @@ public class Employee {
     @JoinColumn(name = "managerId", referencedColumnName = "id")
     private Employee manager;
 
-    @OneToMany(mappedBy = "employee", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "employee", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     public List<Reservation> createdReservations;
 
     @OneToMany(mappedBy = "approvedBy", fetch = FetchType.LAZY)
