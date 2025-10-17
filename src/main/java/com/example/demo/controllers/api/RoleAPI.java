@@ -49,32 +49,32 @@ public class RoleAPI {
         return ResponseEntity.status(200).body(new ResponseDTO<>("success","Data ditemukan",roleDTO));
     }
 
-    @PostMapping
-    public ResponseEntity<?> save(
-        @RequestHeader(name = "token") String token, 
-        @RequestBody RoleDTO roleDTO) 
-    {
-        if (token == null || token.isEmpty()){
-            return ResponseEntity.status(400).body(new ResponseDTO<>("error","Token tidak boleh kosong",null));
-        }
+    // @PostMapping
+    // public ResponseEntity<?> insert(
+    //     @RequestHeader(name = "token") String token, 
+    //     @RequestBody RoleDTO roleDTO) 
+    // {
+    //     if (token == null || token.isEmpty()){
+    //         return ResponseEntity.status(400).body(new ResponseDTO<>("error","Token tidak boleh kosong",null));
+    //     }
 
-        if (!token.equals("abcd")) {
-            return ResponseEntity.status(400).body(new ResponseDTO<>("error","Token tidak valid",null));
-        }
+    //     if (!token.equals("abcd")) {
+    //         return ResponseEntity.status(400).body(new ResponseDTO<>("error","Token tidak valid",null));
+    //     }
 
-        Boolean success = roleService.save(roleDTO);
-        if(success){
-            return ResponseEntity.status(200).body(new ResponseDTO<>("success","Data berhasil disimpan",null));
-        }else{
-            return ResponseEntity.status(400).body(new ResponseDTO<>("error","Data gagal disimpan",null));
-        }
+    //     Boolean success = roleService.save(roleDTO);
+    //     if(success){
+    //         return ResponseEntity.status(200).body(new ResponseDTO<>("success","Data berhasil disimpan",null));
+    //     }else{
+    //         return ResponseEntity.status(400).body(new ResponseDTO<>("error","Data gagal disimpan",null));
+    //     }
         
-    }
+    // }
 
-    @PutMapping
-    public ResponseEntity<?> update(
+    @PostMapping
+    public ResponseEntity<?> insertUpdate(
         @RequestHeader(name = "token") String token,
-        @RequestParam(name = "id") Integer id, 
+        @RequestParam(name = "id", required = false) Integer id, 
         @RequestBody RoleDTO roleDTO)
     {
         if (token == null || token.isEmpty()){
@@ -85,13 +85,16 @@ public class RoleAPI {
             return ResponseEntity.status(400).body(new ResponseDTO<>("error","Token tidak valid",null));
         }
 
-        RoleDTO roleDTOById = roleService.get(id);
+        if (id != null) {
+            RoleDTO roleDTOById = roleService.get(id);
 
-        if(roleDTOById == null){
-            return ResponseEntity.status(400).body(new ResponseDTO<>("error","Data tidak ditemukan",null));
+            if(roleDTOById == null){
+                return ResponseEntity.status(400).body(new ResponseDTO<>("error","Data tidak ditemukan",null));
+            }
+            
+            roleDTO.setId(id);
         }
         
-        roleDTO.setId(id);
         Boolean success = roleService.save(roleDTO);
 
         if(success){
