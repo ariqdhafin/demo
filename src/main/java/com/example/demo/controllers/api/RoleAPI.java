@@ -136,6 +136,42 @@ public class RoleAPI {
         }
     }
 
-    // @DeleteMapping
-    // public ResponseEntity
+    @DeleteMapping
+    public ResponseEntity<?> delete(
+        @RequestHeader(name = "token") String token, 
+        @RequestParam(name = "id") Integer id)
+    {
+        Map<String, Object> response = new LinkedHashMap<>();
+        
+        if (token == null || token.isEmpty()){
+            response.put("status", "error");
+            response.put("message", "Token tidak boleh kosong");
+            return ResponseEntity.status(400).body(response);
+        }
+
+        if (!token.equals("abcd")) {
+            response.put("status", "error");
+            response.put("message", "Token tidak valid");
+            return ResponseEntity.status(400).body(response);
+        }
+
+        RoleDTO roleDTOById = roleService.get(id);
+
+        if(roleDTOById  == null){
+            response.put("status", "error");
+            response.put("message", "Data tidak ditemukan");
+            return ResponseEntity.status(400).body(response);
+        }
+
+        Boolean success = roleService.remove(id);
+        if(success){
+            response.put("status", "success");
+            response.put("message", "Data berhasil dihapus");
+            return ResponseEntity.status(200).body(response);
+        }else{
+            response.put("status", "error");
+            response.put("message", "Data gagal dihapus");
+            return ResponseEntity.status(400).body(response);
+        }
+    }
 }
