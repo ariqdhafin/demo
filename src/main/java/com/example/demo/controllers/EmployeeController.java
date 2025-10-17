@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.example.demo.Models.Employee;
 import com.example.demo.Models.dto.EmployeeDTO;
 import com.example.demo.services.EmployeeService;
 
@@ -28,9 +27,14 @@ public class EmployeeController {
         return "employee/index";
     }
 
-    @GetMapping("form")
-    public String form(Model model) {
-        model.addAttribute("employeeDTO", new EmployeeDTO());
+    @GetMapping(value = {"form", "form/{id}"})
+    public String form(Model model, @PathVariable(required = false) Integer id) {
+        if (id != null){
+            model.addAttribute("employeeDTO", employeeService.get(id));
+        } else {
+            model.addAttribute("employeeDTO", new EmployeeDTO());
+        }
+
         return "employee/form";
     }
 
@@ -42,26 +46,6 @@ public class EmployeeController {
             return "redirect:/employee";
         }
         return "employee/form";
-    }
-
-    @GetMapping("edit/{id}") 
-    public String edit(@PathVariable Integer id, Model model) { 
-        Employee employee = employeeService.get(id);
-        EmployeeDTO employeeDTO = new EmployeeDTO();
-
-        employeeDTO.setId(employee.getId());
-        employeeDTO.setName(employee.getName());
-        employeeDTO.setAddress(employee.getAddress());
-        employeeDTO.setEmail(employee.getEmail());
-        employeeDTO.setPosition(employee.getPosition());
-        if (employee.getManager() != null) {
-            employeeDTO.setManagerId(employee.getManager().getId());
-        } else {
-            employeeDTO.setManagerId(null);
-        }
-
-        model.addAttribute("employeeDTO", employeeDTO); 
-        return "employee/form"; 
     }
 
     @PostMapping("delete/{id}") 

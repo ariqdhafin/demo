@@ -13,6 +13,5 @@ public class EmployeeDTO {
     private String address;
     private String email;
     private String position;
-    private Integer managerId;
-    
+    private Integer managerId; 
 }

@@ -23,9 +23,9 @@
                 <td th:text="${employee.address}"></td>
                 <td th:text="${employee.email}"></td>
                 <td th:text="${employee.position}"></td>
-                <td th:text="${employee.manager != null ? employee.manager.Id : '-' }"></td>
+                <td th:text="${employee.managerId != null ? employee.managerId : '-' }"></td>
                 <td>
-                    <a th:href="@{'/employee/edit/' + ${employee.id}}">
+                    <a th:href="@{'/employee/form/' + ${employee.id}}">
                         <button type="button">Edit</button>
                     </a>
                     <form th:action="@{'/employee/delete/' + ${employee.id}}" method="post">

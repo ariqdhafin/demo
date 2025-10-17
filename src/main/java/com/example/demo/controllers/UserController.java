@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.example.demo.Models.User;
 import com.example.demo.Models.dto.UserDTO;
 import com.example.demo.services.UserService;
 
@@ -28,9 +27,13 @@ public class UserController {
         return "user/index";
     }
 
-    @GetMapping("form")
-    public String form(Model model) {
-        model.addAttribute("userDTO", new UserDTO());
+    @GetMapping(value = {"form", "form/{id}"})
+    public String form(Model model, @PathVariable(required = false) Integer id) {
+        if (id != null){
+            model.addAttribute("userDTO", userService.get(id));
+        } else {
+            model.addAttribute("userDTO", new UserDTO());
+        }
         return "user/form";
     }
 
@@ -44,23 +47,23 @@ public class UserController {
         return "user/form";
     }
 
-    @GetMapping("edit/{id}") 
-    public String edit(@PathVariable Integer id, Model model) { 
-        User user = userService.get(id);
-        UserDTO userDTO = new UserDTO();
+    // @GetMapping("edit/{id}") 
+    // public String edit(@PathVariable Integer id, Model model) { 
+    //     User user = userService.get(id);
+    //     UserDTO userDTO = new UserDTO();
 
-        userDTO.setId(user.getId());
-        userDTO.setUsername(user.getUsername());
-        userDTO.setPassword(user.getPassword());
-        if (user.getRole() != null) {
-            userDTO.setRoleId(user.getRole().getId());
-        } else {
-            userDTO.setRoleId(null);
-        }
+    //     userDTO.setId(user.getId());
+    //     userDTO.setUsername(user.getUsername());
+    //     userDTO.setPassword(user.getPassword());
+    //     if (user.getRole() != null) {
+    //         userDTO.setRoleId(user.getRole().getId());
+    //     } else {
+    //         userDTO.setRoleId(null);
+    //     }
 
-        model.addAttribute("userDTO", userDTO); 
-        return "user/form"; 
-    }
+    //     model.addAttribute("userDTO", userDTO); 
+    //     return "user/form"; 
+    // }
 
     @PostMapping("delete/{id}") 
     public String delete(@PathVariable Integer id) {

@@ -19,12 +19,12 @@ public class EmployeeService {
         this.employeeRepository = employeeRepository;
     }
 
-    public List<Employee> getAll() {
-        return employeeRepository.findAll();
+    public List<EmployeeDTO> getAll() {
+        return employeeRepository.getAll();
     }
 
-    public Employee get(Integer id) {
-        return employeeRepository.findById(id).orElse(null);
+    public EmployeeDTO get(Integer id) {
+        return employeeRepository.get(id);
     }
 
     public Boolean save(EmployeeDTO employeeDTO) {

@@ -26,12 +26,12 @@ public class UserService {
         this.employeeRepository = employeeRepository;
     }
 
-    public List<User> getAll() {
-        return userRepository.findAll();
+    public List<UserDTO> getAll() {
+        return userRepository.getAll();
     }
 
-    public User get(Integer id) {
-        return userRepository.findById(id).orElse(null);
+    public UserDTO get(Integer id) {
+        return userRepository.get(null);
     }
 
     public Boolean save(UserDTO userDTO) {
