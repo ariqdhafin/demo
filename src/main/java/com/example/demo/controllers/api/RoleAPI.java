@@ -1,8 +1,5 @@
 package com.example.demo.controllers.api;
 
-import java.util.LinkedHashMap;
-import java.util.Map;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -15,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.demo.Models.dto.ResponseDTO;
 import com.example.demo.Models.dto.RoleDTO;
 import com.example.demo.services.RoleService;
 
@@ -33,32 +31,22 @@ public class RoleAPI {
         @RequestHeader(name = "token") String token, 
         @RequestParam(name = "id") Integer id)
     {
-        Map<String, Object> response = new LinkedHashMap<>();
 
         if (token == null || token.isEmpty()){
-            response.put("status", "error");
-            response.put("message", "Token tidak boleh kosong");
-            return ResponseEntity.status(400).body(response);
+            return ResponseEntity.status(400).body(new ResponseDTO<>("error","Token tidak boleh kosong",null));
         }
 
         if (!token.equals("abcd")) {
-            response.put("status", "error");
-            response.put("message", "Token tidak valid");
-            return ResponseEntity.status(400).body(response);
+            return ResponseEntity.status(400).body(new ResponseDTO<>("error","Token tidak valid",null));
         }
 
         RoleDTO roleDTO = roleService.get(id);
 
         if(roleDTO == null){
-            response.put("status", "error");
-            response.put("message", "Data tidak ditemukan");
-            return ResponseEntity.status(400).body(response);
+            return ResponseEntity.status(400).body(new ResponseDTO<>("error","Data tidak ditemukan",null));
         }
 
-        response.put("status", "success");
-        response.put("message", "Data ditemukan");
-        response.put("data", roleDTO);
-        return ResponseEntity.status(200).body(response);
+        return ResponseEntity.status(200).body(new ResponseDTO<>("success","Data ditemukan",null));
     }
 
     @PostMapping
@@ -66,29 +54,19 @@ public class RoleAPI {
         @RequestHeader(name = "token") String token, 
         @RequestBody RoleDTO roleDTO) 
     {
-        Map<String, Object> response = new LinkedHashMap<>();
-
         if (token == null || token.isEmpty()){
-            response.put("status", "error");
-            response.put("message", "Token tidak boleh kosong");
-            return ResponseEntity.status(400).body(response);
+            return ResponseEntity.status(400).body(new ResponseDTO<>("error","Token tidak boleh kosong",null));
         }
 
         if (!token.equals("abcd")) {
-            response.put("status", "error");
-            response.put("message", "Token tidak valid");
-            return ResponseEntity.status(400).body(response);
+            return ResponseEntity.status(400).body(new ResponseDTO<>("error","Token tidak valid",null));
         }
 
         Boolean success = roleService.save(roleDTO);
         if(success){
-            response.put("status", "success");
-            response.put("message", "Data berhasil disimpan");
-            return ResponseEntity.status(200).body(response);
+            return ResponseEntity.status(200).body(new ResponseDTO<>("success","Data berhasil disimpan",null));
         }else{
-            response.put("status", "error");
-            response.put("message", "Data gagal disimpan");
-            return ResponseEntity.status(400).body(response);
+            return ResponseEntity.status(400).body(new ResponseDTO<>("error","Data gagal disimpan",null));
         }
         
     }
@@ -99,41 +77,29 @@ public class RoleAPI {
         @RequestParam(name = "id") Integer id, 
         @RequestBody RoleDTO roleDTO)
     {
-        Map<String, Object> response = new LinkedHashMap<>();
-        
         if (token == null || token.isEmpty()){
-            response.put("status", "error");
-            response.put("message", "Token tidak boleh kosong");
-            return ResponseEntity.status(400).body(response);
+            return ResponseEntity.status(400).body(new ResponseDTO<>("error","Token tidak boleh kosong",null));
         }
 
         if (!token.equals("abcd")) {
-            response.put("status", "error");
-            response.put("message", "Token tidak valid");
-            return ResponseEntity.status(400).body(response);
+            return ResponseEntity.status(400).body(new ResponseDTO<>("error","Token tidak valid",null));
         }
 
         RoleDTO roleDTOById = roleService.get(id);
 
-        if(roleDTOById  == null){
-            response.put("status", "error");
-            response.put("message", "Data tidak ditemukan");
-            return ResponseEntity.status(400).body(response);
+        if(roleDTOById == null){
+            return ResponseEntity.status(400).body(new ResponseDTO<>("error","Data tidak ditemukan",null));
         }
         
         roleDTO.setId(id);
         Boolean success = roleService.save(roleDTO);
 
         if(success){
-            response.put("status", "success");
-            response.put("message", "Data berhasil disimpan");
-            response.put("data", roleDTO);
-            return ResponseEntity.status(200).body(response);
+            return ResponseEntity.status(200).body(new ResponseDTO<>("success","Data berhasil disimpan",null));
         }else{
-            response.put("status", "error");
-            response.put("message", "Data gagal disimpan");
-            return ResponseEntity.status(400).body(response);
+            return ResponseEntity.status(400).body(new ResponseDTO<>("error","Data gagal disimpan",null));
         }
+        
     }
 
     @DeleteMapping
@@ -141,37 +107,26 @@ public class RoleAPI {
         @RequestHeader(name = "token") String token, 
         @RequestParam(name = "id") Integer id)
     {
-        Map<String, Object> response = new LinkedHashMap<>();
         
         if (token == null || token.isEmpty()){
-            response.put("status", "error");
-            response.put("message", "Token tidak boleh kosong");
-            return ResponseEntity.status(400).body(response);
+            return ResponseEntity.status(400).body(new ResponseDTO<>("error","Token tidak boleh kosong",null));
         }
 
         if (!token.equals("abcd")) {
-            response.put("status", "error");
-            response.put("message", "Token tidak valid");
-            return ResponseEntity.status(400).body(response);
+            return ResponseEntity.status(400).body(new ResponseDTO<>("error","Token tidak valid",null));
         }
 
         RoleDTO roleDTOById = roleService.get(id);
 
-        if(roleDTOById  == null){
-            response.put("status", "error");
-            response.put("message", "Data tidak ditemukan");
-            return ResponseEntity.status(400).body(response);
+        if(roleDTOById == null){
+            return ResponseEntity.status(400).body(new ResponseDTO<>("error","Data tidak ditemukan",null));
         }
 
         Boolean success = roleService.remove(id);
         if(success){
-            response.put("status", "success");
-            response.put("message", "Data berhasil dihapus");
-            return ResponseEntity.status(200).body(response);
+            return ResponseEntity.status(200).body(new ResponseDTO<>("success","Data berhasil dihapus",null));
         }else{
-            response.put("status", "error");
-            response.put("message", "Data gagal dihapus");
-            return ResponseEntity.status(400).body(response);
+            return ResponseEntity.status(400).body(new ResponseDTO<>("error","Data gagal dihapus",null));
         }
     }
 }
