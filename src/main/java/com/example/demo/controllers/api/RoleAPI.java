@@ -46,7 +46,7 @@ public class RoleAPI {
             return ResponseEntity.status(400).body(new ResponseDTO<>("error","Data tidak ditemukan",null));
         }
 
-        return ResponseEntity.status(200).body(new ResponseDTO<>("success","Data ditemukan",null));
+        return ResponseEntity.status(200).body(new ResponseDTO<>("success","Data ditemukan",roleDTO));
     }
 
     @PostMapping
