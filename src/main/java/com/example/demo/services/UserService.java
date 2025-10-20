@@ -34,6 +34,10 @@ public class UserService {
         return userRepository.get(null);
     }
 
+    public UserDTO getByUsername(String username){
+        return userRepository.findByUsername(username);
+    }
+
     public Boolean save(UserDTO userDTO) {
         User user = new User();
         user.setId(userDTO.getId());

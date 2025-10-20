@@ -28,4 +28,14 @@ public interface UserRepository extends JpaRepository<User, Integer>{
                     u.id = ?1
             """)
     public UserDTO get(Integer id);
+
+    @Query("""
+            SELECT 
+                new com.example.demo.Models.dto.UserDTO(u.id, u.username, u.password, u.role.Id, u.employee.id)
+                FROM
+                    User u
+                WHERE 
+                    u.username = ?1
+            """)
+    public UserDTO findByUsername(String username);
 }
