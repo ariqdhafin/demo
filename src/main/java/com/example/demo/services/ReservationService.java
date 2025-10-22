@@ -72,15 +72,11 @@ public class ReservationService {
 
     public Boolean remove(Integer id) {
         Reservation reservation = reservationRepository.findById(id).orElse(null);
-        if (reservation.getEmployee() != null) {
-            reservation.getEmployee().getCreatedReservations().remove(reservation);
-            reservation.getEmployee().getApprovedReservations().remove(reservation);
+        if (reservation != null) {
+            reservationRepository.deleteById(id);
+        }else{
+            return false;
         }
-        if (reservation.getRoom() != null) {
-            reservation.getRoom().getReservations().remove(reservation);
-            reservation.setRoom(null);
-        }
-        reservationRepository.deleteById(id);
         return !reservationRepository.findById(id).isPresent();
     }
 }

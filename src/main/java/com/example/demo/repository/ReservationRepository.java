@@ -25,7 +25,7 @@ public interface ReservationRepository extends JpaRepository<Reservation, Intege
                     r.approvalStatus,
                     r.approvedBy.id
                 )
-                FROM
+            FROM
                     Reservation r
             """)
     public List<ReservationDTO> getAll();
@@ -44,8 +44,10 @@ public interface ReservationRepository extends JpaRepository<Reservation, Intege
                     r.approvalStatus,
                     r.approvedBy.id
                 )
-                FROM
+            FROM
                     Reservation r
+            WHERE
+                    r.id = ?1
             """)
     public ReservationDTO get(Integer id);
 } 

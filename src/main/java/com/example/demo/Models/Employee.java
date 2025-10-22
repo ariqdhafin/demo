@@ -36,7 +36,7 @@ public class Employee {
     @JoinColumn(name = "managerId", referencedColumnName = "id")
     private Employee manager;
 
-    @OneToMany(mappedBy = "employee", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "employee", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE, orphanRemoval = true)
     public List<Reservation> createdReservations;
 
     @OneToMany(mappedBy = "approvedBy", fetch = FetchType.LAZY)

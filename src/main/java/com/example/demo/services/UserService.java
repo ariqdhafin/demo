@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.Models.Employee;
+import com.example.demo.Models.Reservation;
 import com.example.demo.Models.Role;
 import com.example.demo.Models.User;
 import com.example.demo.Models.dto.UserDTO;
@@ -20,7 +21,8 @@ public class UserService {
     private final EmployeeRepository employeeRepository;
 
     @Autowired
-    public UserService(UserRepository userRepository, RoleRepository roleRepository, EmployeeRepository employeeRepository) {
+    public UserService(UserRepository userRepository, RoleRepository roleRepository,
+            EmployeeRepository employeeRepository) {
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
         this.employeeRepository = employeeRepository;
@@ -31,7 +33,7 @@ public class UserService {
     }
 
     public UserDTO get(Integer id) {
-        return userRepository.get(null);
+        return userRepository.get(id);
     }
 
     public UserDTO getByUsername(String username){
@@ -64,17 +66,25 @@ public class UserService {
     public Boolean remove(Integer id) {
         User user = userRepository.findById(id).orElse(null);
         if (user != null) {
-            if (user.getEmployee() != null) {
-                user.getEmployee().setUser(null);
-                user.setEmployee(null);
+            Employee employee = user.getEmployee();
+            if (employee != null){
+                List<Employee> listEmployees = employeeRepository.findByManager(employee.getManager());
+                for(Employee e: listEmployees){
+                    e.setManager(null);
+                }
+                for (Reservation r : employee.getApprovedReservations()) {
+                    r.setApprovedBy(null);
+                }
+                if(employee.getUser() != null){
+                    userRepository.deleteById(employee.getUser().getId());
+                }
+            }else{
+                return false;
             }
-            if (user.getRole() != null) {
-                user.getRole().getUsers().remove(user);
-                user.setRole(null);
-            }
-            userRepository.delete(user);
-            return true;
-        }   
+            userRepository.deleteById(id);
+        }else{
+            return false;
+        }
         return !userRepository.findById(id).isPresent();
     }
 }

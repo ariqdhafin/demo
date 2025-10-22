@@ -1,5 +1,6 @@
 package com.example.demo.Models;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -29,7 +30,7 @@ public class User {
     @JoinColumn(name = "roleId", referencedColumnName = "id")
     private Role role;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.REMOVE, orphanRemoval = true)
     @JoinColumn(name = "employeeId") 
     private Employee employee;
 }

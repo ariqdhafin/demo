@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -30,16 +29,7 @@ public class RoomAPI {
 
     @GetMapping
     public ResponseEntity<?> getAll(
-        @RequestHeader(name = "token") String token
     ){
-        if (token != null && !token.isEmpty()){
-            if (!token.equals("abcd")) {
-                return ResponseEntity.status(401).body(new ResponseDTO<>("error","Token tidak valid",null));
-            }
-        }else{
-            return ResponseEntity.status(400).body(new ResponseDTO<>("error","Token tidak boleh kosong",null));
-        }
-
         List<RoomDTO> roomDTO = roomService.getAll();
 
         if(roomDTO == null){
@@ -51,18 +41,9 @@ public class RoomAPI {
 
     @GetMapping("/{id}")
     public ResponseEntity<?> getById(
-        @RequestHeader(name = "token") String token,
         @PathVariable Integer id
     )
     {
-        if (token != null && !token.isEmpty()){
-            if (!token.equals("abcd")) {
-                return ResponseEntity.status(401).body(new ResponseDTO<>("error","Token tidak valid",null));
-            }
-        }else{
-            return ResponseEntity.status(400).body(new ResponseDTO<>("error","Token tidak boleh kosong",null));
-        }
-
         RoomDTO roomDTO = roomService.get(id);
 
         if(roomDTO == null){
@@ -74,17 +55,8 @@ public class RoomAPI {
 
     @PostMapping
     public ResponseEntity<?> insert(
-        @RequestHeader(name = "token") String token,
         @RequestBody RoomDTO roomDTO
     ){
-        if (token != null && !token.isEmpty()){
-            if (!token.equals("abcd")) {
-                return ResponseEntity.status(401).body(new ResponseDTO<>("error","Token tidak valid",null));
-            }
-        }else{
-            return ResponseEntity.status(400).body(new ResponseDTO<>("error","Token tidak boleh kosong",null));
-        }
-
         Boolean success = roomService.save(roomDTO);
 
          if(success){
@@ -96,18 +68,9 @@ public class RoomAPI {
 
     @PutMapping("/{id}")
     public ResponseEntity<?> update(
-        @RequestHeader(name = "token") String token,
         @PathVariable Integer id,
         @RequestBody RoomDTO roomDTO
     ){
-        if (token != null && !token.isEmpty()){
-            if (!token.equals("abcd")) {
-                return ResponseEntity.status(401).body(new ResponseDTO<>("error","Token tidak valid",null));
-            }
-        }else{
-            return ResponseEntity.status(400).body(new ResponseDTO<>("error","Token tidak boleh kosong",null));
-        }
-
         RoomDTO roomDTOById = roomService.get(id);
 
         if(roomDTOById == null){
@@ -127,17 +90,8 @@ public class RoomAPI {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<?> delete(
-        @RequestHeader(name = "token") String token,
         @PathVariable Integer id
     ){
-        if (token != null && !token.isEmpty()){
-            if (!token.equals("abcd")) {
-                return ResponseEntity.status(401).body(new ResponseDTO<>("error","Token tidak valid",null));
-            }
-        }else{
-            return ResponseEntity.status(400).body(new ResponseDTO<>("error","Token tidak boleh kosong",null));
-        }
-
         RoomDTO roomDTOById = roomService.get(id);
 
         if(roomDTOById == null){

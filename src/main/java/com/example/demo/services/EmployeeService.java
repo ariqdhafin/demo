@@ -6,17 +6,21 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.Models.Employee;
+import com.example.demo.Models.Reservation;
 import com.example.demo.Models.dto.EmployeeDTO;
 import com.example.demo.repository.EmployeeRepository;
+import com.example.demo.repository.UserRepository;
 
 @Service
 public class EmployeeService {
 
     private final EmployeeRepository employeeRepository;
+    private final UserRepository userRepository;
 
     @Autowired
-    public EmployeeService(EmployeeRepository employeeRepository){
+    public EmployeeService(EmployeeRepository employeeRepository, UserRepository userRepository) {
         this.employeeRepository = employeeRepository;
+        this.userRepository = userRepository;
     }
 
     public List<EmployeeDTO> getAll() {
@@ -52,15 +56,19 @@ public class EmployeeService {
         Employee employee = employeeRepository.findById(id).orElse(null);
         if (employee != null){
             List<Employee> listEmployees = employeeRepository.findByManager(employee.getManager());
-            for(Employee le: listEmployees){
-                le.setManager(null);
+            for(Employee e: listEmployees){
+                e.setManager(null);
+            }
+            for (Reservation r : employee.getApprovedReservations()) {
+                r.setApprovedBy(null);
             }
             if(employee.getUser() != null){
-                employee.getUser().setEmployee(null);
-                employee.setUser(null);
+                userRepository.deleteById(employee.getUser().getId());
             }
+            employeeRepository.deleteById(id);
+        }else{
+            return false;
         }
-        employeeRepository.deleteById(id);
         return !employeeRepository.findById(id).isPresent();
     }
 }
