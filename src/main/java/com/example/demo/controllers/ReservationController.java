@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.example.demo.Models.Reservation;
 import com.example.demo.Models.dto.ReservationDTO;
 import com.example.demo.services.ReservationService;
 
@@ -44,30 +43,30 @@ public class ReservationController {
         return "reservation/form";
     }
 
-    @GetMapping("edit/{id}") 
-    public String edit(@PathVariable Integer id, Model model) { 
-        Reservation reservation = reservationService.get(id);
-        ReservationDTO reservationDTO = new ReservationDTO();
+    // @GetMapping("edit/{id}") 
+    // public String edit(@PathVariable Integer id, Model model) { 
+    //     Reservation reservation = reservationService.get(id);
+    //     ReservationDTO reservationDTO = new ReservationDTO();
 
-        reservationDTO.setId(reservation.getId());
-        reservationDTO.setEmployeeId(reservation.getEmployee().getId());;
-        reservationDTO.setRoomId(reservation.getRoom().getId());
-        reservationDTO.setSubmitDate(reservation.getSubmitDate());
-        reservationDTO.setPurpose(reservation.getPurpose());
-        reservationDTO.setReservationDate(reservation.getReservationDate());
-        reservationDTO.setStartTime(reservation.getStartTime());
-        reservationDTO.setEndTime(reservation.getEndTime());
-        reservationDTO.setApprovalStatus(reservation.getApprovalStatus());
+    //     reservationDTO.setId(reservation.getId());
+    //     reservationDTO.setEmployeeId(reservation.getEmployee().getId());;
+    //     reservationDTO.setRoomId(reservation.getRoom().getId());
+    //     reservationDTO.setSubmitDate(reservation.getSubmitDate());
+    //     reservationDTO.setPurpose(reservation.getPurpose());
+    //     reservationDTO.setReservationDate(reservation.getReservationDate());
+    //     reservationDTO.setStartTime(reservation.getStartTime());
+    //     reservationDTO.setEndTime(reservation.getEndTime());
+    //     reservationDTO.setApprovalStatus(reservation.getApprovalStatus());
 
-        if (reservation.getApprovedBy() != null) {
-            reservationDTO.setApprovedBy(reservation.getApprovedBy().getId());
-        } else {
-            reservationDTO.setApprovedBy(null);
-        }
+    //     if (reservation.getApprovedBy() != null) {
+    //         reservationDTO.setApprovedBy(reservation.getApprovedBy().getId());
+    //     } else {
+    //         reservationDTO.setApprovedBy(null);
+    //     }
 
-        model.addAttribute("reservationDTO", reservationDTO); 
-        return "reservation/form"; 
-    }
+    //     model.addAttribute("reservationDTO", reservationDTO); 
+    //     return "reservation/form"; 
+    // }
 
     @PostMapping("delete/{id}") 
     public String delete(@PathVariable Integer id) {

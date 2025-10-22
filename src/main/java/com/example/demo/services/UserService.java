@@ -35,7 +35,7 @@ public class UserService {
     }
 
     public UserDTO getByUsername(String username){
-        return userRepository.findByUsername(username);
+        return userRepository.findByUsernameDTO(username);
     }
 
     public Boolean save(UserDTO userDTO) {

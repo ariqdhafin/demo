@@ -26,12 +26,12 @@ public class ReservationService {
         this.roomRepository = roomRepository;
     }
 
-    public List<Reservation> getAll() {
-        return reservationRepository.findAll();
+    public List<ReservationDTO> getAll() {
+        return reservationRepository.getAll();
     }
 
-    public Reservation get(Integer id) {
-        return reservationRepository.findById(id).orElse(null);
+    public ReservationDTO get(Integer id) {
+        return reservationRepository.get(id);
     }
 
     public Boolean save(ReservationDTO reservationDTO) {
