@@ -1,12 +1,14 @@
 package com.example.demo.controllers;
 
 import com.example.demo.Models.User;
+import com.example.demo.Models.dto.ResponseDTO;
 import com.example.demo.Models.dto.UserDTO;
 import com.example.demo.repository.UserRepository;
 import com.example.demo.security.JwtUtil;
 import com.example.demo.services.UserService;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.*;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
@@ -27,7 +29,7 @@ public class AuthController {
     @Autowired
     UserService userService;
     @PostMapping("/signin")
-    public String authenticateUser(@RequestBody User user) {
+    public ResponseEntity<?> authenticateUser(@RequestBody User user) {
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
                         user.getUsername(),
@@ -39,7 +41,9 @@ public class AuthController {
             .findFirst()
             .map(GrantedAuthority::getAuthority)
             .orElse(null);
-        return jwtUtils.generateToken(userDetails.getUsername(), roleName);
+        return ResponseEntity
+            .status(200)
+            .body(new ResponseDTO<>("success","Berhasil login",jwtUtils.generateToken(userDetails.getUsername(), roleName)));
     }
     @PostMapping("/signup")
     public String registerUser(@RequestBody UserDTO userDTO) {
