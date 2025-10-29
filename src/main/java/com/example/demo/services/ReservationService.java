@@ -1,5 +1,6 @@
 package com.example.demo.services;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,7 +51,6 @@ public class ReservationService {
         }
         reservation.setRoom(room);
 
-        reservation.setSubmitDate(reservationDTO.getSubmitDate());
         reservation.setPurpose(reservationDTO.getPurpose());
         reservation.setReservationDate(reservationDTO.getReservationDate());
         reservation.setStartTime(reservationDTO.getStartTime());
@@ -63,6 +63,13 @@ public class ReservationService {
                 return false; 
             }
             reservation.setApprovedBy(approveBy);
+        }
+
+        if (reservationDTO.getId() != null) {
+            reservation.setUpdateDateTime(LocalDateTime.now());
+        }else{
+            reservation.setSubmitDateTime(LocalDateTime.now());
+            reservation.setUpdateDateTime(LocalDateTime.now());
         }
 
         reservationRepository.save(reservation);

@@ -5,9 +5,9 @@ import java.util.List;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -63,20 +63,21 @@ public class ReservationAPI {
         }
     }
 
-    @PutMapping("/{id}")
+    @PatchMapping("/{id}")
     public ResponseEntity<?> update(
         @PathVariable Integer id,
         @RequestBody ReservationDTO reservationDTO
     ){
-        ReservationDTO reservationDTOById = reservationService.get(id);
+        ReservationDTO existingReservation = reservationService.get(id);
 
-        if(reservationDTOById == null){
+        if(existingReservation == null){
             return ResponseEntity.status(404).body(new ResponseDTO<>("error","Data tidak ditemukan",null));
         }
 
-        reservationDTO.setId(id);
+        existingReservation.setApprovalStatus(reservationDTO.getApprovalStatus());
+        existingReservation.setApprovedBy(reservationDTO.getApprovedBy());
 
-        Boolean success = reservationService.save(reservationDTO);
+        Boolean success = reservationService.save(existingReservation);
 
         if(success){
             return ResponseEntity.status(200).body(new ResponseDTO<>("success","Data berhasil diperbarui",null));

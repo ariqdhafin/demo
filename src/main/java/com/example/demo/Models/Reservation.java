@@ -1,5 +1,9 @@
 package com.example.demo.Models;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -29,14 +33,16 @@ public class Reservation {
     @JoinColumn(name = "roomId", referencedColumnName = "id")
     private Room room;
 
-    private java.sql.Date submitDate;
     private String purpose;
-    private java.sql.Date reservationDate;
-    private java.sql.Time startTime;
-    private java.sql.Time endTime;
+    private LocalDate reservationDate;
+    private LocalTime startTime;
+    private LocalTime endTime;
     private String approvalStatus;
 
     @ManyToOne
     @JoinColumn(name = "approvedBy", referencedColumnName = "id")
     private Employee approvedBy;
+
+    private LocalDateTime submitDateTime;
+    private LocalDateTime updateDateTime;
 }
