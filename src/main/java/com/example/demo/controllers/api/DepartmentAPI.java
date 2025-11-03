@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -14,29 +13,29 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.Models.dto.ResponseDTO;
-import com.example.demo.Models.dto.RoleDTO;
-import com.example.demo.services.RoleService;
+import com.example.demo.Models.dto.DepartmentDTO;
+import com.example.demo.services.DepartmentService;
 
 @RestController
-@RequestMapping("api/role")
-public class RoleAPI {
-    private final RoleService roleService;
+@RequestMapping("api/department")
+public class DepartmentAPI {
+    private final DepartmentService departmentService;
 
     @Autowired
-    public RoleAPI(RoleService roleService){
-        this.roleService = roleService;
+    public DepartmentAPI(DepartmentService departmentService){
+        this.departmentService = departmentService;
     }
 
     @GetMapping
     public ResponseEntity<?> getAll(
     ){
-        List<RoleDTO> roleDTO = roleService.getAll();
+        List<DepartmentDTO> departmentDTO = departmentService.getAll();
 
-        if(roleDTO == null){
+        if(departmentDTO == null){
             return ResponseEntity.status(404).body(new ResponseDTO<>("error","Data tidak ditemukan",null));
         }
 
-        return ResponseEntity.status(200).body(new ResponseDTO<>("success","Data ditemukan",roleDTO));
+        return ResponseEntity.status(200).body(new ResponseDTO<>("success","Data ditemukan",departmentDTO));
     }
 
     @GetMapping("/{id}")
@@ -44,20 +43,20 @@ public class RoleAPI {
         @PathVariable Integer id
     )
     {
-        RoleDTO roleDTO = roleService.get(id);
+        DepartmentDTO departmentDTO = departmentService.get(id);
 
-        if(roleDTO == null){
+        if(departmentDTO == null){
             return ResponseEntity.status(404).body(new ResponseDTO<>("error","Data tidak ditemukan",null));
         }
 
-        return ResponseEntity.status(200).body(new ResponseDTO<>("success","Data ditemukan",roleDTO));
+        return ResponseEntity.status(200).body(new ResponseDTO<>("success","Data ditemukan",departmentDTO));
     }
 
     @PostMapping
     public ResponseEntity<?> insert(
-        @RequestBody RoleDTO roleDTO
+        @RequestBody DepartmentDTO departmentDTO
     ){
-        Boolean success = roleService.save(roleDTO);
+        Boolean success = departmentService.save(departmentDTO);
 
          if(success){
             return ResponseEntity.status(200).body(new ResponseDTO<>("success","Data berhasil disimpan",null));
@@ -69,15 +68,15 @@ public class RoleAPI {
     @PutMapping("/{id}")
     public ResponseEntity<?> update(
         @PathVariable Integer id,
-        @RequestBody RoleDTO roleDTO
+        @RequestBody DepartmentDTO departmentDTO
     ){
-        RoleDTO existingRole = roleService.get(id);
+        DepartmentDTO departmentDTOById = departmentService.get(id);
 
-        if(existingRole == null){
+        if(departmentDTOById == null){
             return ResponseEntity.status(404).body(new ResponseDTO<>("error","Data tidak ditemukan",null));
         }
 
-        Boolean success = roleService.update(id, roleDTO);
+        Boolean success = departmentService.update(id, departmentDTO);
 
         if(success){
             return ResponseEntity.status(200).body(new ResponseDTO<>("success","Data berhasil diperbarui",null));
@@ -86,22 +85,22 @@ public class RoleAPI {
         }
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<?> delete(
-        @PathVariable Integer id
-    ){
-        RoleDTO roleDTOById = roleService.get(id);
+    // @DeleteMapping("/{id}")
+    // public ResponseEntity<?> delete(
+    //     @PathVariable Integer id
+    // ){
+    //     DepartmentDTO departmentDTOById = departmentService.get(id);
 
-        if(roleDTOById == null){
-            return ResponseEntity.status(404).body(new ResponseDTO<>("error","Data tidak ditemukan",null));
-        }
+    //     if(departmentDTOById == null){
+    //         return ResponseEntity.status(404).body(new ResponseDTO<>("error","Data tidak ditemukan",null));
+    //     }
 
-        Boolean success = roleService.remove(id);
+    //     Boolean success = departmentService.remove(id);
 
-        if(success){
-            return ResponseEntity.status(200).body(new ResponseDTO<>("success","Data berhasil dihapus",null));
-        }else{
-            return ResponseEntity.status(400).body(new ResponseDTO<>("error","Data gagal dihapus",null));
-        }
-    }
+    //     if(success){
+    //         return ResponseEntity.status(200).body(new ResponseDTO<>("success","Data berhasil dihapus",null));
+    //     }else{
+    //         return ResponseEntity.status(400).body(new ResponseDTO<>("error","Data gagal dihapus",null));
+    //     }
+    // }
 }

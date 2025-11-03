@@ -1,5 +1,6 @@
 package com.example.demo.services;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,15 +33,29 @@ public class RoomService {
 
     public Boolean save(RoomDTO roomdto){
         Room room = new Room();
-        room.setId(roomdto.getId());
         room.setName(roomdto.getName());
-        room.setCapacity(roomdto.getCapacity());
         room.setLocation(roomdto.getLocation());
+        room.setCapacity(roomdto.getCapacity());
         room.setStatus(roomdto.getStatus());
+        room.setCreatedAt(LocalDateTime.now());
+        room.setUpdatedAt(LocalDateTime.now());
 
         roomRepository.save(room);
 
         return roomRepository.findById(room.getId()).isPresent();
+    }
+
+    public Boolean update(Integer id, RoomDTO roomdto){
+        Room existingRoom = roomRepository.findById(id).orElse(null);
+        existingRoom.setName(roomdto.getName());
+        existingRoom.setLocation(roomdto.getLocation());
+        existingRoom.setCapacity(roomdto.getCapacity());
+        existingRoom.setStatus(roomdto.getStatus());
+        existingRoom.setUpdatedAt(LocalDateTime.now());
+
+        roomRepository.save(existingRoom);
+
+        return roomRepository.findById(existingRoom.getId()).isPresent();
     }
 
     public Boolean remove(Integer id){

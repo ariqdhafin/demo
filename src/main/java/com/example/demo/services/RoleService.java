@@ -1,5 +1,6 @@
 package com.example.demo.services;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,8 +33,23 @@ public class RoleService {
 
     public Boolean save(RoleDTO roledto){
         Role role = new Role();
-        role.setId(roledto.getId());
+
         role.setName(roledto.getName());
+        role.setDescription(roledto.getDescription());
+        role.setCreatedAt(LocalDateTime.now());
+        role.setUpdatedAt(LocalDateTime.now());
+
+        roleRepository.save(role);
+
+        return roleRepository.findById(role.getId()).isPresent();
+    }
+
+    public Boolean update(Integer id, RoleDTO roleDTO){
+        Role role = roleRepository.findById(id).orElse(null);
+
+        role.setName(roleDTO.getName());
+        role.setDescription(roleDTO.getDescription());
+        role.setUpdatedAt(LocalDateTime.now());
 
         roleRepository.save(role);
 

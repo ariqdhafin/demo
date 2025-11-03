@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -14,29 +13,29 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.Models.dto.ResponseDTO;
-import com.example.demo.Models.dto.RoleDTO;
-import com.example.demo.services.RoleService;
+import com.example.demo.Models.dto.RoomFeatureDTO;
+import com.example.demo.services.RoomFeatureService;
 
 @RestController
-@RequestMapping("api/role")
-public class RoleAPI {
-    private final RoleService roleService;
+@RequestMapping("api/roomFeature")
+public class RoomFeatureAPI {
+    private final RoomFeatureService roomFeatureService;
 
     @Autowired
-    public RoleAPI(RoleService roleService){
-        this.roleService = roleService;
+    public RoomFeatureAPI(RoomFeatureService roomFeatureService){
+        this.roomFeatureService = roomFeatureService;
     }
 
     @GetMapping
     public ResponseEntity<?> getAll(
     ){
-        List<RoleDTO> roleDTO = roleService.getAll();
+        List<RoomFeatureDTO> roomFeatureDTO = roomFeatureService.getAll();
 
-        if(roleDTO == null){
+        if(roomFeatureDTO == null){
             return ResponseEntity.status(404).body(new ResponseDTO<>("error","Data tidak ditemukan",null));
         }
 
-        return ResponseEntity.status(200).body(new ResponseDTO<>("success","Data ditemukan",roleDTO));
+        return ResponseEntity.status(200).body(new ResponseDTO<>("success","Data ditemukan",roomFeatureDTO));
     }
 
     @GetMapping("/{id}")
@@ -44,20 +43,20 @@ public class RoleAPI {
         @PathVariable Integer id
     )
     {
-        RoleDTO roleDTO = roleService.get(id);
+        RoomFeatureDTO roomFeatureDTO = roomFeatureService.get(id);
 
-        if(roleDTO == null){
+        if(roomFeatureDTO == null){
             return ResponseEntity.status(404).body(new ResponseDTO<>("error","Data tidak ditemukan",null));
         }
 
-        return ResponseEntity.status(200).body(new ResponseDTO<>("success","Data ditemukan",roleDTO));
+        return ResponseEntity.status(200).body(new ResponseDTO<>("success","Data ditemukan",roomFeatureDTO));
     }
 
     @PostMapping
     public ResponseEntity<?> insert(
-        @RequestBody RoleDTO roleDTO
+        @RequestBody RoomFeatureDTO roomFeatureDTO
     ){
-        Boolean success = roleService.save(roleDTO);
+        Boolean success = roomFeatureService.save(roomFeatureDTO);
 
          if(success){
             return ResponseEntity.status(200).body(new ResponseDTO<>("success","Data berhasil disimpan",null));
@@ -69,15 +68,15 @@ public class RoleAPI {
     @PutMapping("/{id}")
     public ResponseEntity<?> update(
         @PathVariable Integer id,
-        @RequestBody RoleDTO roleDTO
+        @RequestBody RoomFeatureDTO roomFeatureDTO
     ){
-        RoleDTO existingRole = roleService.get(id);
+        RoomFeatureDTO roomFeatureDTOById = roomFeatureService.get(id);
 
-        if(existingRole == null){
+        if(roomFeatureDTOById == null){
             return ResponseEntity.status(404).body(new ResponseDTO<>("error","Data tidak ditemukan",null));
         }
 
-        Boolean success = roleService.update(id, roleDTO);
+        Boolean success = roomFeatureService.update(id, roomFeatureDTO);
 
         if(success){
             return ResponseEntity.status(200).body(new ResponseDTO<>("success","Data berhasil diperbarui",null));
@@ -86,22 +85,22 @@ public class RoleAPI {
         }
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<?> delete(
-        @PathVariable Integer id
-    ){
-        RoleDTO roleDTOById = roleService.get(id);
+    // @DeleteMapping("/{id}")
+    // public ResponseEntity<?> delete(
+    //     @PathVariable Integer id
+    // ){
+    //     RoomFeatureDTO roomFeatureDTOById = roomFeatureService.get(id);
 
-        if(roleDTOById == null){
-            return ResponseEntity.status(404).body(new ResponseDTO<>("error","Data tidak ditemukan",null));
-        }
+    //     if(roomFeatureDTOById == null){
+    //         return ResponseEntity.status(404).body(new ResponseDTO<>("error","Data tidak ditemukan",null));
+    //     }
 
-        Boolean success = roleService.remove(id);
+    //     Boolean success = roomFeatureService.remove(id);
 
-        if(success){
-            return ResponseEntity.status(200).body(new ResponseDTO<>("success","Data berhasil dihapus",null));
-        }else{
-            return ResponseEntity.status(400).body(new ResponseDTO<>("error","Data gagal dihapus",null));
-        }
-    }
+    //     if(success){
+    //         return ResponseEntity.status(200).body(new ResponseDTO<>("success","Data berhasil dihapus",null));
+    //     }else{
+    //         return ResponseEntity.status(400).body(new ResponseDTO<>("error","Data gagal dihapus",null));
+    //     }
+    // }
 }

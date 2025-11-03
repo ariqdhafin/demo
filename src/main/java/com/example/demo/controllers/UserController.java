@@ -65,9 +65,9 @@ public class UserController {
     //     return "user/form"; 
     // }
 
-    @PostMapping("delete/{id}") 
-    public String delete(@PathVariable Integer id) {
-        userService.remove(id);
-        return "redirect:/user";
-    }
+    // @PostMapping("delete/{id}") 
+    // public String delete(@PathVariable Integer id) {
+    //     userService.remove(id);
+    //     return "redirect:/user";
+    // }
 }

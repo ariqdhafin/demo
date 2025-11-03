@@ -1,8 +1,6 @@
 package com.example.demo.Models.dto;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -13,14 +11,13 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class ReservationDTO {
     private Integer id;
-    private Integer employeeId;
+    private Integer reservedBy;
+    private Integer reviewedBy;
     private Integer roomId;
     private String purpose;
-    private LocalDate reservationDate;
-    private LocalTime startTime;
-    private LocalTime endTime;
+    private LocalDateTime startDateTime;
+    private LocalDateTime endDateTime;
     private String approvalStatus;
-    private Integer approvedBy;
-    private LocalDateTime submitDateTime;
-    private LocalDateTime updateDateTime;
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
 }

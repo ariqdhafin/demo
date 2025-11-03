@@ -15,25 +15,20 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "rooms")
+@Table(name = "room_features")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Room {
+public class RoomFeature {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     private String name;
-    private String location;
-    private Integer capacity;
-    private String status;
+    private String description;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
-    @OneToMany(mappedBy = "room", fetch = FetchType.LAZY)
-    public List<Reservation> reservations;
-
-    @OneToMany(mappedBy = "room", fetch = FetchType.LAZY)
-    public List<RoomFeatureMapping> roomFeatureMappings;
+    @OneToMany(mappedBy = "roomFeature", fetch = FetchType.LAZY)
+    private List<RoomFeatureMapping> roomFeatureMappings;
 }

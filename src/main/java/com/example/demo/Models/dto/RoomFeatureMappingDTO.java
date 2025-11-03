@@ -9,12 +9,11 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class RoomDTO {
+public class RoomFeatureMappingDTO {
     private Integer id;
-    private String name;
-    private String location;
-    private Integer capacity;
-    private String status;
+    private Integer roomId;
+    private Integer roomFeatureId;
+    private Integer quantity;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 }

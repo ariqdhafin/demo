@@ -1,12 +1,12 @@
 package com.example.demo.services;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.Models.Employee;
-import com.example.demo.Models.Reservation;
 import com.example.demo.Models.Role;
 import com.example.demo.Models.User;
 import com.example.demo.Models.dto.UserDTO;
@@ -42,7 +42,7 @@ public class UserService {
 
     public Boolean save(UserDTO userDTO) {
         User user = new User();
-        user.setId(userDTO.getId());
+        
         user.setUsername(userDTO.getUsername());
         user.setPassword(userDTO.getPassword());
 
@@ -58,33 +58,54 @@ public class UserService {
         }
         user.setEmployee(employee);
 
+        user.setCreatedAt(LocalDateTime.now());
+        user.setUpdatedAt(LocalDateTime.now());
+
         userRepository.save(user);
 
         return userRepository.findById(user.getId()).isPresent();
     }
 
-    public Boolean remove(Integer id) {
-        User user = userRepository.findById(id).orElse(null);
-        if (user != null) {
-            Employee employee = user.getEmployee();
-            if (employee != null){
-                List<Employee> listEmployees = employeeRepository.findByManager(employee.getManager());
-                for(Employee e: listEmployees){
-                    e.setManager(null);
-                }
-                for (Reservation r : employee.getApprovedReservations()) {
-                    r.setApprovedBy(null);
-                }
-                if(employee.getUser() != null){
-                    userRepository.deleteById(employee.getUser().getId());
-                }
-            }else{
-                return false;
-            }
-            userRepository.deleteById(id);
-        }else{
-            return false;
+    public Boolean update(Integer id, UserDTO userDTO){
+        User existingUser = userRepository.findById(id).orElse(null);
+
+        existingUser.setUsername(userDTO.getUsername());
+
+        Role role = roleRepository.findById(userDTO.getRoleId()).orElse(null);
+        if (role == null) {
+            return false; 
         }
-        return !userRepository.findById(id).isPresent();
+        existingUser.setRole(role);
+
+        existingUser.setUpdatedAt(LocalDateTime.now());
+
+        userRepository.save(existingUser);
+
+        return userRepository.findById(existingUser.getId()).isPresent();
     }
+
+    // public Boolean remove(Integer id) {
+    //     User user = userRepository.findById(id).orElse(null);
+    //     if (user != null) {
+    //         Employee employee = user.getEmployee();
+    //         if (employee != null){
+    //             List<Employee> listEmployees = employeeRepository.findByManager(employee.getManager());
+    //             for(Employee e: listEmployees){
+    //                 e.setManager(null);
+    //             }
+    //             for (Reservation r : employee.getApprovedReservations()) {
+    //                 r.setApprovedBy(null);
+    //             }
+    //             if(employee.getUser() != null){
+    //                 userRepository.deleteById(employee.getUser().getId());
+    //             }
+    //         }else{
+    //             return false;
+    //         }
+    //         userRepository.deleteById(id);
+    //     }else{
+    //         return false;
+    //     }
+    //     return !userRepository.findById(id).isPresent();
+    // }
 }

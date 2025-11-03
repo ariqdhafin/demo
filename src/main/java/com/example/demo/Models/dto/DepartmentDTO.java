@@ -9,12 +9,10 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class RoomDTO {
+public class DepartmentDTO {
     private Integer id;
+    private Integer managerId;
     private String name;
-    private String location;
-    private Integer capacity;
-    private String status;
-    private LocalDateTime createdAt;
-    private LocalDateTime updatedAt;
+    private LocalDateTime createdAt; 
+    private LocalDateTime updatedAt; 
 }

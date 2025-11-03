@@ -1,8 +1,6 @@
 package com.example.demo.Models;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -26,23 +24,21 @@ public class Reservation {
     private Integer id;
 
     @ManyToOne
-    @JoinColumn(name = "employeeId", referencedColumnName = "id")
-    private Employee employee;
+    @JoinColumn(name = "reservedBy", referencedColumnName = "id")
+    private Employee reservedBy;
+    
+    @ManyToOne
+    @JoinColumn(name = "reviewedBy", referencedColumnName = "id")
+    private Employee reviewedBy;
 
     @ManyToOne
     @JoinColumn(name = "roomId", referencedColumnName = "id")
     private Room room;
 
     private String purpose;
-    private LocalDate reservationDate;
-    private LocalTime startTime;
-    private LocalTime endTime;
+    private LocalDateTime startDateTime;
+    private LocalDateTime endDateTime;
     private String approvalStatus;
-
-    @ManyToOne
-    @JoinColumn(name = "approvedBy", referencedColumnName = "id")
-    private Employee approvedBy;
-
-    private LocalDateTime submitDateTime;
-    private LocalDateTime updateDateTime;
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
 }

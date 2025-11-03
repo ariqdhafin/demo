@@ -46,9 +46,11 @@ public class AuthController {
             .body(new ResponseDTO<>("success","Berhasil login",jwtUtils.generateToken(userDetails.getUsername(), roleName)));
     }
     @PostMapping("/signup")
-    public String registerUser(@RequestBody UserDTO userDTO) {
+    public ResponseEntity<?> registerUser(@RequestBody UserDTO userDTO) {
         userDTO.setPassword(encoder.encode(userDTO.getPassword()));
         userService.save(userDTO);
-        return "User registered successfully!";
+        return ResponseEntity
+            .status(200)
+            .body(new ResponseDTO<>("success","User berhasil register",null));
     }
 }

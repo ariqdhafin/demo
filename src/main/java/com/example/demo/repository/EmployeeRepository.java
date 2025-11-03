@@ -12,22 +12,38 @@ import com.example.demo.Models.dto.EmployeeDTO;
 @Repository
 public interface EmployeeRepository extends JpaRepository<Employee, Integer> {
     @Query("""
-            SELECT 
-                new com.example.demo.Models.dto.EmployeeDTO(e.id, e.name, e.address, e.email, e.position, e.manager.Id)
+                SELECT 
+                    new com.example.demo.Models.dto.EmployeeDTO(
+                        e.id, 
+                        e.department.id,
+                        e.name, 
+                        e.email, 
+                        e.position, 
+                        e.isActive,
+                        e.createdAt,
+                        e.updatedAt
+                    )
                 FROM
                     Employee e
             """)
     public List<EmployeeDTO> getAll();
     
     @Query("""
-            SELECT 
-                new com.example.demo.Models.dto.EmployeeDTO(e.id, e.name, e.address, e.email, e.position, e.manager.Id)
+                SELECT 
+                    new com.example.demo.Models.dto.EmployeeDTO(
+                        e.id, 
+                        e.department.id,
+                        e.name, 
+                        e.email, 
+                        e.position, 
+                        e.isActive,
+                        e.createdAt,
+                        e.updatedAt
+                    )
                 FROM
                     Employee e
                 WHERE 
                     e.id = ?1
             """)
     public EmployeeDTO get(Integer id);
-
-    List<Employee> findByManager(Employee manager); 
 }

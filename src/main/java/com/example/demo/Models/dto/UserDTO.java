@@ -1,5 +1,7 @@
 package com.example.demo.Models.dto;
 
+import java.time.LocalDateTime;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -9,8 +11,10 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class UserDTO {
     private Integer id;
-    private String username;
-    private String password;
     private Integer roleId;
     private Integer employeeId;
+    private String username;
+    private String password;
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
 }

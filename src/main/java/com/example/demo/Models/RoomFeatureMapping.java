@@ -1,37 +1,37 @@
 package com.example.demo.Models;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "roles")
+@Table(name = "room_feature_mappings")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Role {
+public class RoomFeatureMapping {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    private String name;
+    @ManyToOne
+    @JoinColumn(name = "room_id", referencedColumnName = "id")
+    private Room room;
 
-    private String description;
+    @ManyToOne
+    @JoinColumn(name = "feature_id", referencedColumnName = "id")
+    private RoomFeature roomFeature;
 
+    private Integer quantity;
     private LocalDateTime createdAt;
-
     private LocalDateTime updatedAt;
-
-    @OneToMany(mappedBy = "role", fetch = FetchType.LAZY)
-    public List<User> users;
 }

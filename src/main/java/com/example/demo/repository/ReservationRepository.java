@@ -15,16 +15,15 @@ public interface ReservationRepository extends JpaRepository<Reservation, Intege
             SELECT 
                 new com.example.demo.Models.dto.ReservationDTO(
                     r.id, 
-                    r.employee.id, 
+                    r.reservedBy.id, 
+                    r.reviewedBy.id,
                     r.room.id,  
                     r.purpose,
-                    r.reservationDate,
-                    r.startTime,
-                    r.endTime,
+                    r.startDateTime,
+                    r.endDateTime,
                     r.approvalStatus,
-                    r.approvedBy.id,
-                    r.submitDateTime,
-                    r.updateDateTime
+                    r.createdAt,
+                    r.updatedAt
                 )
             FROM
                     Reservation r
@@ -35,16 +34,15 @@ public interface ReservationRepository extends JpaRepository<Reservation, Intege
             SELECT 
                 new com.example.demo.Models.dto.ReservationDTO(
                     r.id, 
-                    r.employee.id, 
+                    r.reservedBy.id, 
+                    r.reviewedBy.id,
                     r.room.id,  
                     r.purpose,
-                    r.reservationDate,
-                    r.startTime,
-                    r.endTime,
+                    r.startDateTime,
+                    r.endDateTime,
                     r.approvalStatus,
-                    r.approvedBy.id,
-                    r.submitDateTime,
-                    r.updateDateTime
+                    r.createdAt,
+                    r.updatedAt
                 )
             FROM
                     Reservation r

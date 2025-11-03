@@ -1,26 +1,27 @@
 package com.example.demo.services;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.example.demo.Models.Department;
 import com.example.demo.Models.Employee;
-import com.example.demo.Models.Reservation;
 import com.example.demo.Models.dto.EmployeeDTO;
+import com.example.demo.repository.DepartmentRepository;
 import com.example.demo.repository.EmployeeRepository;
-import com.example.demo.repository.UserRepository;
 
 @Service
 public class EmployeeService {
 
     private final EmployeeRepository employeeRepository;
-    private final UserRepository userRepository;
+    private final DepartmentRepository departmentRepository;
 
     @Autowired
-    public EmployeeService(EmployeeRepository employeeRepository, UserRepository userRepository) {
+    public EmployeeService(EmployeeRepository employeeRepository, DepartmentRepository departmentRepository) {
         this.employeeRepository = employeeRepository;
-        this.userRepository = userRepository;
+        this.departmentRepository = departmentRepository;
     }
 
     public List<EmployeeDTO> getAll() {
@@ -33,42 +34,66 @@ public class EmployeeService {
 
     public Boolean save(EmployeeDTO employeeDTO) {
         Employee employee = new Employee();
-        employee.setId(employeeDTO.getId());
-        employee.setName(employeeDTO.getName());
-        employee.setAddress(employeeDTO.getAddress());
-        employee.setEmail(employeeDTO.getEmail());
-        employee.setPosition(employeeDTO.getPosition());
 
-        if (employeeDTO.getManagerId() != null) {
-            Employee manager = employeeRepository.findById(employeeDTO.getManagerId()).orElse(null);
-            if (manager == null) {
+        if (employeeDTO.getDepartmenId()!= null) {
+            Department department = departmentRepository.findById(employeeDTO.getDepartmenId()).orElse(null);
+            if (department == null) {
                 return false; 
             }
-            employee.setManager(manager);
+            employee.setDepartment(department);;
+        }else{
+            return false;
         }
+
+        employee.setName(employeeDTO.getName());
+        
+        employee.setEmail(employeeDTO.getEmail());
+
+        employee.setPosition(employeeDTO.getPosition());
+
+        employee.setIsActive(true);
+
+        employee.setCreatedAt(LocalDateTime.now());
+        employee.setUpdatedAt(LocalDateTime.now());
 
         employeeRepository.save(employee);
 
         return employeeRepository.findById(employee.getId()).isPresent();
     }
 
-    public Boolean remove(Integer id) {
-        Employee employee = employeeRepository.findById(id).orElse(null);
-        if (employee != null){
-            List<Employee> listEmployees = employeeRepository.findByManager(employee.getManager());
-            for(Employee e: listEmployees){
-                e.setManager(null);
+    public boolean update(Integer id, EmployeeDTO employeeDTO){
+        Employee existingEmployee = employeeRepository.findById(id).orElse(null);
+
+        if (employeeDTO.getDepartmenId()!= null) {
+            Department department = departmentRepository.findById(employeeDTO.getDepartmenId()).orElse(null);
+            if (department == null) {
+                return false; 
             }
-            for (Reservation r : employee.getApprovedReservations()) {
-                r.setApprovedBy(null);
-            }
-            if(employee.getUser() != null){
-                userRepository.deleteById(employee.getUser().getId());
-            }
-            employeeRepository.deleteById(id);
+            existingEmployee.setDepartment(department);;
         }else{
             return false;
         }
-        return !employeeRepository.findById(id).isPresent();
+
+        existingEmployee.setName(employeeDTO.getName());
+        
+        existingEmployee.setEmail(employeeDTO.getEmail());
+
+        existingEmployee.setPosition(employeeDTO.getPosition());   
+        
+        existingEmployee.setUpdatedAt(LocalDateTime.now());
+
+        employeeRepository.save(existingEmployee);
+
+        return employeeRepository.findById(existingEmployee.getId()).isPresent();
+    }
+
+    public Boolean remove(Integer id) {
+        Employee existingEmployee = employeeRepository.findById(id).orElse(null);
+
+        existingEmployee.setIsActive(false);
+
+        employeeRepository.save(existingEmployee);
+
+        return true;
     }
 }

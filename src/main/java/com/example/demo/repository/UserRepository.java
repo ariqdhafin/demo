@@ -12,16 +12,32 @@ import com.example.demo.Models.dto.UserDTO;
 @Repository
 public interface UserRepository extends JpaRepository<User, Integer>{
     @Query("""
-            SELECT 
-                new com.example.demo.Models.dto.UserDTO(u.id, u.username, u.password, u.role.Id, u.employee.id)
+                SELECT 
+                    new com.example.demo.Models.dto.UserDTO(
+                        u.id, 
+                        u.role.id, 
+                        u.employee.id,
+                        u.username, 
+                        u.password, 
+                        u.createdAt,
+                        u.updatedAt
+                    )
                 FROM
                     User u
             """)
     public List<UserDTO> getAll();
     
     @Query("""
-            SELECT 
-                new com.example.demo.Models.dto.UserDTO(u.id, u.username, u.password, u.role.Id, u.employee.id)
+                SELECT 
+                    new com.example.demo.Models.dto.UserDTO(
+                        u.id, 
+                        u.role.id, 
+                        u.employee.id,
+                        u.username, 
+                        u.password, 
+                        u.createdAt,
+                        u.updatedAt
+                    )                
                 FROM
                     User u
                 WHERE 
@@ -30,8 +46,16 @@ public interface UserRepository extends JpaRepository<User, Integer>{
     public UserDTO get(Integer id);
 
     @Query("""
-            SELECT 
-                new com.example.demo.Models.dto.UserDTO(u.id, u.username, u.password, u.role.Id, u.employee.id)
+                SELECT 
+                    new com.example.demo.Models.dto.UserDTO(
+                        u.id, 
+                        u.role.id, 
+                        u.employee.id,
+                        u.username, 
+                        u.password, 
+                        u.createdAt,
+                        u.updatedAt
+                    )                
                 FROM
                     User u
                 WHERE 

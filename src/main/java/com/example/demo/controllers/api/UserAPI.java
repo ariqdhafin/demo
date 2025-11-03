@@ -3,7 +3,6 @@ package com.example.demo.controllers.api;
 import java.util.List;
 
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -74,9 +73,7 @@ public class UserAPI {
             return ResponseEntity.status(404).body(new ResponseDTO<>("error","Data tidak ditemukan",null));
         }
 
-        userDTO.setId(id);
-
-        Boolean success = userService.save(userDTO);
+        Boolean success = userService.update(id, userDTO);
 
         if(success){
             return ResponseEntity.status(200).body(new ResponseDTO<>("success","Data berhasil diperbarui",null));
@@ -85,22 +82,22 @@ public class UserAPI {
         }
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<?> delete(
-        @PathVariable Integer id
-    ){
-        UserDTO userDTOById = userService.get(id);
+    // @DeleteMapping("/{id}")
+    // public ResponseEntity<?> delete(
+    //     @PathVariable Integer id
+    // ){
+    //     UserDTO userDTOById = userService.get(id);
 
-        if(userDTOById == null){
-            return ResponseEntity.status(404).body(new ResponseDTO<>("error","Data tidak ditemukan",null));
-        }
+    //     if(userDTOById == null){
+    //         return ResponseEntity.status(404).body(new ResponseDTO<>("error","Data tidak ditemukan",null));
+    //     }
 
-        Boolean success = userService.remove(id);
+    //     Boolean success = userService.remove(id);
 
-        if(success){
-            return ResponseEntity.status(200).body(new ResponseDTO<>("success","Data berhasil dihapus",null));
-        }else{
-            return ResponseEntity.status(400).body(new ResponseDTO<>("error","Data gagal dihapus",null));
-        }
-    }
+    //     if(success){
+    //         return ResponseEntity.status(200).body(new ResponseDTO<>("success","Data berhasil dihapus",null));
+    //     }else{
+    //         return ResponseEntity.status(400).body(new ResponseDTO<>("error","Data gagal dihapus",null));
+    //     }
+    // }
 }

@@ -74,9 +74,7 @@ public class EmployeeAPI {
             return ResponseEntity.status(404).body(new ResponseDTO<>("error","Data tidak ditemukan",null));
         }
 
-        employeeDTO.setId(id);
-
-        Boolean success = employeeService.save(employeeDTO);
+        Boolean success = employeeService.update(id, employeeDTO);
 
         if(success){
             return ResponseEntity.status(200).body(new ResponseDTO<>("success","Data berhasil diperbarui",null));

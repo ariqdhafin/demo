@@ -37,13 +37,14 @@ public class ReservationService {
 
     public Boolean save(ReservationDTO reservationDTO) {
         Reservation reservation = new Reservation();
-        reservation.setId(reservationDTO.getId());
 
-        Employee employee = employeeRepository.findById(reservationDTO.getEmployeeId()).orElse(null);
-        if (employee == null) {
+        Employee reservedBy = employeeRepository.findById(reservationDTO.getReservedBy()).orElse(null);
+        if (reservedBy == null) {
             return false; 
         }
-        reservation.setEmployee(employee);
+        reservation.setReservedBy(reservedBy);
+        
+        reservation.setReviewedBy(null);
 
         Room room = roomRepository.findById(reservationDTO.getRoomId()).orElse(null);
         if (room == null) {
@@ -52,38 +53,44 @@ public class ReservationService {
         reservation.setRoom(room);
 
         reservation.setPurpose(reservationDTO.getPurpose());
-        reservation.setReservationDate(reservationDTO.getReservationDate());
-        reservation.setStartTime(reservationDTO.getStartTime());
-        reservation.setEndTime(reservationDTO.getEndTime());
-        reservation.setApprovalStatus(reservationDTO.getApprovalStatus());
-
-        if (reservationDTO.getApprovedBy() != null) {
-            Employee approveBy = employeeRepository.findById(reservationDTO.getApprovedBy()).orElse(null);
-            if (approveBy  == null) {
-                return false; 
-            }
-            reservation.setApprovedBy(approveBy);
-        }
-
-        if (reservationDTO.getId() != null) {
-            reservation.setUpdateDateTime(LocalDateTime.now());
-        }else{
-            reservation.setSubmitDateTime(LocalDateTime.now());
-            reservation.setUpdateDateTime(LocalDateTime.now());
-        }
+        reservation.setStartDateTime(reservationDTO.getStartDateTime());
+        reservation.setEndDateTime(reservationDTO.getEndDateTime());
+        reservation.setApprovalStatus("Pending");
+        reservation.setCreatedAt(LocalDateTime.now());
+        reservation.setUpdatedAt(LocalDateTime.now());
 
         reservationRepository.save(reservation);
 
         return reservationRepository.findById(reservation.getId()).isPresent();
     }
 
-    public Boolean remove(Integer id) {
-        Reservation reservation = reservationRepository.findById(id).orElse(null);
-        if (reservation != null) {
-            reservationRepository.deleteById(id);
-        }else{
-            return false;
+    public Boolean update(Integer id, ReservationDTO reservationDTO) {
+        Reservation existingReservation = reservationRepository.findById(id).orElse(null);
+        
+        if (reservationDTO.getReviewedBy() != null) {
+            Employee reviewedBy = employeeRepository.findById(reservationDTO.getReviewedBy()).orElse(null);
+            if (reviewedBy == null) {
+                return false; 
+            }   
+            existingReservation.setReviewedBy(reviewedBy);
         }
-        return !reservationRepository.findById(id).isPresent();
+
+        existingReservation.setApprovalStatus(reservationDTO.getApprovalStatus());
+        
+        existingReservation.setUpdatedAt(LocalDateTime.now());
+
+        reservationRepository.save(existingReservation);
+
+        return reservationRepository.findById(existingReservation.getId()).isPresent();
     }
+
+    // public Boolean remove(Integer id) {
+    //     Reservation reservation = reservationRepository.findById(id).orElse(null);
+    //     if (reservation != null) {
+    //         reservationRepository.deleteById(id);
+    //     }else{
+    //         return false;
+    //     }
+    //     return !reservationRepository.findById(id).isPresent();
+    // }
 }

@@ -2,37 +2,40 @@ package com.example.demo.controllers.api;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.demo.Models.dto.ReservationDTO;
 import com.example.demo.Models.dto.ResponseDTO;
-import com.example.demo.services.ReservationService;
+import com.example.demo.Models.dto.RoomFeatureMappingDTO;
+import com.example.demo.services.RoomFeatureMappingService;
 
 @RestController
-@RequestMapping("api/reservation")
-public class ReservationAPI {
-    private final ReservationService reservationService;
+@RequestMapping("api/roomFeatureMapping")
+public class RoomFeatureMappingAPI {
+    private final RoomFeatureMappingService roomFeatureMappingService;
 
-    public ReservationAPI(ReservationService reservationService) {
-        this.reservationService = reservationService;
+    @Autowired
+    public RoomFeatureMappingAPI(RoomFeatureMappingService roomFeatureMappingService){
+        this.roomFeatureMappingService = roomFeatureMappingService;
     }
 
     @GetMapping
-    public ResponseEntity<?> getAll(){
-        List<ReservationDTO> reservationDTO = reservationService.getAll();
+    public ResponseEntity<?> getAll(
+    ){
+        List<RoomFeatureMappingDTO> roomFeatureMappingDTO = roomFeatureMappingService.getAll();
 
-        if(reservationDTO == null){
+        if(roomFeatureMappingDTO == null){
             return ResponseEntity.status(404).body(new ResponseDTO<>("error","Data tidak ditemukan",null));
         }
 
-        return ResponseEntity.status(200).body(new ResponseDTO<>("success","Data ditemukan",reservationDTO));
+        return ResponseEntity.status(200).body(new ResponseDTO<>("success","Data ditemukan",roomFeatureMappingDTO));
     }
 
     @GetMapping("/{id}")
@@ -40,40 +43,40 @@ public class ReservationAPI {
         @PathVariable Integer id
     )
     {
-        ReservationDTO reservationDTO = reservationService.get(id);
+        RoomFeatureMappingDTO roomFeatureMappingDTO = roomFeatureMappingService.get(id);
 
-        if(reservationDTO == null){
+        if(roomFeatureMappingDTO == null){
             return ResponseEntity.status(404).body(new ResponseDTO<>("error","Data tidak ditemukan",null));
         }
 
-        return ResponseEntity.status(200).body(new ResponseDTO<>("success","Data ditemukan",reservationDTO));
+        return ResponseEntity.status(200).body(new ResponseDTO<>("success","Data ditemukan",roomFeatureMappingDTO));
     }
 
     @PostMapping
     public ResponseEntity<?> insert(
-        @RequestBody ReservationDTO reservationDTO
+        @RequestBody RoomFeatureMappingDTO roomFeatureMappingDTO
     ){
-        Boolean success = reservationService.save(reservationDTO);
+        Boolean success = roomFeatureMappingService.save(roomFeatureMappingDTO);
 
-        if(success){
+         if(success){
             return ResponseEntity.status(200).body(new ResponseDTO<>("success","Data berhasil disimpan",null));
         }else{
             return ResponseEntity.status(400).body(new ResponseDTO<>("error","Data gagal disimpan",null));
         }
     }
 
-    @PatchMapping("/{id}")
+    @PutMapping("/{id}")
     public ResponseEntity<?> update(
         @PathVariable Integer id,
-        @RequestBody ReservationDTO reservationDTO
+        @RequestBody RoomFeatureMappingDTO roomFeatureMappingDTO
     ){
-        ReservationDTO existingReservation = reservationService.get(id);
+        RoomFeatureMappingDTO roomFeatureMappingDTOById = roomFeatureMappingService.get(id);
 
-        if(existingReservation == null){
+        if(roomFeatureMappingDTOById == null){
             return ResponseEntity.status(404).body(new ResponseDTO<>("error","Data tidak ditemukan",null));
         }
 
-        Boolean success = reservationService.update(id, existingReservation);
+        Boolean success = roomFeatureMappingService.update(id, roomFeatureMappingDTO);
 
         if(success){
             return ResponseEntity.status(200).body(new ResponseDTO<>("success","Data berhasil diperbarui",null));
@@ -86,13 +89,13 @@ public class ReservationAPI {
     // public ResponseEntity<?> delete(
     //     @PathVariable Integer id
     // ){
-    //     ReservationDTO reservationDTOById = reservationService.get(id);
+    //     RoomFeatureMappingDTO roomFeatureMappingDTOById = roomFeatureMappingService.get(id);
 
-    //     if(reservationDTOById == null){
+    //     if(roomFeatureMappingDTOById == null){
     //         return ResponseEntity.status(404).body(new ResponseDTO<>("error","Data tidak ditemukan",null));
     //     }
 
-    //     Boolean success = reservationService.remove(id);
+    //     Boolean success = roomFeatureMappingService.remove(id);
 
     //     if(success){
     //         return ResponseEntity.status(200).body(new ResponseDTO<>("success","Data berhasil dihapus",null));

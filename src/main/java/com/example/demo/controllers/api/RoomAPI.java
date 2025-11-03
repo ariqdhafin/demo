@@ -77,9 +77,7 @@ public class RoomAPI {
             return ResponseEntity.status(404).body(new ResponseDTO<>("error","Data tidak ditemukan",null));
         }
 
-        roomDTO.setId(id);
-
-        Boolean success = roomService.save(roomDTO);
+        Boolean success = roomService.update(id, roomDTO);
 
         if(success){
             return ResponseEntity.status(200).body(new ResponseDTO<>("success","Data berhasil diperbarui",null));

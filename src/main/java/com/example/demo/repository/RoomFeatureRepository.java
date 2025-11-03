@@ -6,42 +6,38 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
-import com.example.demo.Models.Room;
-import com.example.demo.Models.dto.RoomDTO;
+import com.example.demo.Models.RoomFeature;
+import com.example.demo.Models.dto.RoomFeatureDTO;
 
 @Repository
-public interface RoomRepository extends JpaRepository<Room, Integer>{
+public interface RoomFeatureRepository extends JpaRepository<RoomFeature, Integer>{
     @Query("""
                 SELECT 
-                    new com.example.demo.Models.dto.RoomDTO(
+                    new com.example.demo.Models.dto.RoomFeatureDTO(
                         r.id, 
                         r.name, 
-                        r.location, 
-                        r.capacity, 
-                        r.status,
+                        r.description, 
                         r.createdAt,
                         r.updatedAt
                     )
                 FROM
-                    Room r
+                    RoomFeature r
             """)
-    public List<RoomDTO> getAll();
+    public List<RoomFeatureDTO> getAll();
     
     @Query("""
                 SELECT 
-                    new com.example.demo.Models.dto.RoomDTO(
+                    new com.example.demo.Models.dto.RoomFeatureDTO(
                         r.id, 
                         r.name, 
-                        r.location, 
-                        r.capacity, 
-                        r.status,
+                        r.description, 
                         r.createdAt,
                         r.updatedAt
                     )
                 FROM
-                    Room r
+                    RoomFeature r
                 WHERE 
                     r.id = ?1
             """)
-    public RoomDTO get(Integer id);
+    public RoomFeatureDTO get(Integer id);
 }

@@ -1,5 +1,6 @@
 package com.example.demo.Models;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import jakarta.persistence.CascadeType;
@@ -27,21 +28,31 @@ public class Employee {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    @ManyToOne
+    @JoinColumn(name = "departmentId", referencedColumnName = "id")
+    private Department department;
+
     private String name;
-    private String address;
+
     private String email;
+
     private String position;
 
-    @ManyToOne
-    @JoinColumn(name = "managerId", referencedColumnName = "id")
-    private Employee manager;
+    private Boolean isActive;
 
-    @OneToMany(mappedBy = "employee", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE, orphanRemoval = true)
-    public List<Reservation> createdReservations;
+    private LocalDateTime createdAt;
 
-    @OneToMany(mappedBy = "approvedBy", fetch = FetchType.LAZY)
-    public List<Reservation> approvedReservations;
+    private LocalDateTime updatedAt;
+
+    @OneToMany(mappedBy = "reservedBy", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE, orphanRemoval = true)
+    public List<Reservation> reservedReservations;
+
+    @OneToMany(mappedBy = "reviewedBy", fetch = FetchType.LAZY)
+    public List<Reservation> reviewedReservations;
 
     @OneToOne(mappedBy = "employee", fetch = FetchType.LAZY)
     private User user;
+
+    @OneToOne(mappedBy = "manager", fetch = FetchType.LAZY)
+    private Department departmentManager;
 }

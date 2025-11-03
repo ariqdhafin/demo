@@ -12,16 +12,28 @@ import com.example.demo.Models.dto.RoleDTO;
 @Repository
 public interface RoleRepository extends JpaRepository<Role, Integer>{
     @Query("""
-            SELECT 
-                new com.example.demo.Models.dto.RoleDTO(r.id, r.name)
+                SELECT 
+                    new com.example.demo.Models.dto.RoleDTO(
+                    r.id, 
+                    r.name,
+                    r.description, 
+                    r.createdAt, 
+                    r.updatedAt
+                )
                 FROM
                     Role r
             """)
     public List<RoleDTO> getAll();
 
     @Query("""
-            SELECT 
-                new com.example.demo.Models.dto.RoleDTO(r.id, r.name)
+                SELECT 
+                    new com.example.demo.Models.dto.RoleDTO(
+                        r.id, 
+                        r.name,
+                        r.description, 
+                        r.createdAt, 
+                        r.updatedAt
+                    )
                 FROM
                     Role r
                 WHERE 
