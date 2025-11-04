@@ -46,11 +46,13 @@ public class UserService {
         user.setUsername(userDTO.getUsername());
         user.setPassword(userDTO.getPassword());
 
-        Role role = roleRepository.findById(userDTO.getRoleId()).orElse(null);
-        if (role == null) {
-            return false; 
+        if (userDTO.getRoleId() != null) {
+            Role role = roleRepository.findById(userDTO.getRoleId()).orElse(null);
+            if (role == null) {
+                return false; 
+            }
+            user.setRole(role);
         }
-        user.setRole(role);
 
         Employee employee = employeeRepository.findById(userDTO.getEmployeeId()).orElse(null);
         if (employee == null) {
@@ -71,11 +73,13 @@ public class UserService {
 
         existingUser.setUsername(userDTO.getUsername());
 
-        Role role = roleRepository.findById(userDTO.getRoleId()).orElse(null);
-        if (role == null) {
-            return false; 
+        if (userDTO.getRoleId() != null) {
+            Role role = roleRepository.findById(userDTO.getRoleId()).orElse(null);
+            if (role == null) {
+                return false; 
+            }
+            existingUser.setRole(role);
         }
-        existingUser.setRole(role);
 
         existingUser.setUpdatedAt(LocalDateTime.now());
 
