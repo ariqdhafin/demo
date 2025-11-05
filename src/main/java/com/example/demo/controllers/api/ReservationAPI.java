@@ -68,12 +68,11 @@ public class ReservationAPI {
         @RequestBody ReservationDTO reservationDTO
     ){
         ReservationDTO existingReservation = reservationService.get(id);
-
         if(existingReservation == null){
             return ResponseEntity.status(404).body(new ResponseDTO<>("error","Data tidak ditemukan",null));
         }
 
-        Boolean success = reservationService.update(id, existingReservation);
+        Boolean success = reservationService.update(id, reservationDTO);
 
         if(success){
             return ResponseEntity.status(200).body(new ResponseDTO<>("success","Data berhasil diperbarui",null));
