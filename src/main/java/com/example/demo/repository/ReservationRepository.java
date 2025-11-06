@@ -50,4 +50,25 @@ public interface ReservationRepository extends JpaRepository<Reservation, Intege
                     r.id = ?1
             """)
     public ReservationDTO get(Integer id);
+
+    @Query("""
+            SELECT 
+                new com.example.demo.Models.dto.ReservationDTO(
+                    r.id, 
+                    r.reservedBy.id, 
+                    r.reviewedBy.id,
+                    r.room.id,  
+                    r.purpose,
+                    r.startDateTime,
+                    r.endDateTime,
+                    r.approvalStatus,
+                    r.createdAt,
+                    r.updatedAt
+                )
+            FROM
+                    Reservation r
+            WHERE
+                    r.reservedBy.id = ?1
+            """)
+    public List<ReservationDTO> getByReservedById(Integer id);
 } 

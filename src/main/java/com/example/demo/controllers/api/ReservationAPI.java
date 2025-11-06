@@ -49,6 +49,20 @@ public class ReservationAPI {
         return ResponseEntity.status(200).body(new ResponseDTO<>("success","Data ditemukan",reservationDTO));
     }
 
+    @GetMapping("/reservedBy/{id}")
+    public ResponseEntity<?> getByReservedById(
+        @PathVariable Integer id
+    )
+    {
+        List<ReservationDTO> reservationDTO = reservationService.getByReservedById(id);
+
+        if(reservationDTO == null){
+            return ResponseEntity.status(404).body(new ResponseDTO<>("error","Data tidak ditemukan",null));
+        }
+
+        return ResponseEntity.status(200).body(new ResponseDTO<>("success","Data ditemukan",reservationDTO));
+    }
+
     @PostMapping
     public ResponseEntity<?> insert(
         @RequestBody ReservationDTO reservationDTO

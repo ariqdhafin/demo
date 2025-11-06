@@ -35,6 +35,10 @@ public class ReservationService {
         return reservationRepository.get(id);
     }
 
+    public List<ReservationDTO> getByReservedById(Integer id){
+        return reservationRepository.getByReservedById(id);
+    }
+
     public Boolean save(ReservationDTO reservationDTO) {
         Reservation reservation = new Reservation();
 
