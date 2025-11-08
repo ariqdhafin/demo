@@ -19,6 +19,7 @@ public interface RoomRepository extends JpaRepository<Room, Integer>{
                         r.location, 
                         r.capacity, 
                         r.status,
+                        r.imageUrl,
                         r.createdAt,
                         r.updatedAt
                     )
@@ -35,6 +36,7 @@ public interface RoomRepository extends JpaRepository<Room, Integer>{
                         r.location, 
                         r.capacity, 
                         r.status,
+                        r.imageUrl,
                         r.createdAt,
                         r.updatedAt
                     )

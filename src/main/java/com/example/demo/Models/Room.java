@@ -28,6 +28,7 @@ public class Room {
     private String location;
     private Integer capacity;
     private String status;
+    private String imageUrl;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 

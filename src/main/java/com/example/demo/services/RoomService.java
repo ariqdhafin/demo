@@ -37,6 +37,7 @@ public class RoomService {
         room.setLocation(roomdto.getLocation());
         room.setCapacity(roomdto.getCapacity());
         room.setStatus(roomdto.getStatus());
+        room.setImageUrl(roomdto.getImageUrl());
         room.setCreatedAt(LocalDateTime.now());
         room.setUpdatedAt(LocalDateTime.now());
 
@@ -51,6 +52,7 @@ public class RoomService {
         existingRoom.setLocation(roomdto.getLocation());
         existingRoom.setCapacity(roomdto.getCapacity());
         existingRoom.setStatus(roomdto.getStatus());
+        existingRoom.setImageUrl(roomdto.getImageUrl());
         existingRoom.setUpdatedAt(LocalDateTime.now());
 
         roomRepository.save(existingRoom);
