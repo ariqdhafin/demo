@@ -11,7 +11,6 @@ import com.example.demo.Models.Reservation;
 import com.example.demo.Models.Room;
 import com.example.demo.Models.dto.FeatureDTO;
 import com.example.demo.Models.dto.RoomDTO;
-import com.example.demo.Models.dto.RoomFeatureDTO;
 import com.example.demo.repository.ReservationRepository;
 import com.example.demo.repository.RoomRepository;
 import com.example.demo.repository.RoomFeatureMappingRepository;
@@ -32,6 +31,25 @@ public class RoomService {
 
     public List<RoomDTO> getAll(){
         List<RoomDTO> roomDTOs =  roomRepository.getAll();
+
+        for(RoomDTO roomDTO: roomDTOs){
+            List<FeatureDTO> featureDTOs = roomFeatureMappingRepository.findByRoomId(roomDTO.getId())
+                .stream()
+                .map(x -> new FeatureDTO(
+                    x.getRoomFeature().getId(),
+                    x.getRoomFeature().getName(),
+                    x.getRoomFeature().getDescription(),
+                    x.getQuantity()
+                ))
+                .collect(Collectors.toList());
+            roomDTO.setFeature(featureDTOs);
+        }
+
+        return roomDTOs;
+    }
+
+    public List<RoomDTO> getAvailableRoom(LocalDateTime starDateTime, LocalDateTime endDateTime){
+        List<RoomDTO> roomDTOs =  roomRepository.getAvailableRoom(starDateTime, endDateTime);
 
         for(RoomDTO roomDTO: roomDTOs){
             List<FeatureDTO> featureDTOs = roomFeatureMappingRepository.findByRoomId(roomDTO.getId())

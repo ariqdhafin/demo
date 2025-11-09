@@ -1,5 +1,6 @@
 package com.example.demo.controllers.api;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.Models.dto.ResponseDTO;
@@ -38,6 +40,21 @@ public class RoomAPI {
 
         return ResponseEntity.status(200).body(new ResponseDTO<>("success","Data ditemukan",roomDTO));
     }
+
+    @GetMapping("/available")
+    public ResponseEntity<?> getAvailableRoom(
+        @RequestParam("startDateTime") LocalDateTime startDateTime,
+        @RequestParam("endDateTime") LocalDateTime endDateTime
+    ){
+        List<RoomDTO> roomDTO = roomService.getAvailableRoom(startDateTime, endDateTime);
+
+        if(roomDTO == null){
+            return ResponseEntity.status(404).body(new ResponseDTO<>("error","Data tidak ditemukan",null));
+        }
+
+        return ResponseEntity.status(200).body(new ResponseDTO<>("success","Data ditemukan",roomDTO));
+    }
+
 
     @GetMapping("/{id}")
     public ResponseEntity<?> getById(
