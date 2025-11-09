@@ -42,4 +42,6 @@ public interface RoomFeatureMappingRepository extends JpaRepository<RoomFeatureM
                     r.id = ?1
             """)
     public RoomFeatureMappingDTO get(Integer id);
+
+    public List<RoomFeatureMapping> findByRoomId(Integer roomId);
 }

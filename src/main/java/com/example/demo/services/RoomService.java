@@ -2,33 +2,67 @@ package com.example.demo.services;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.Models.Reservation;
 import com.example.demo.Models.Room;
+import com.example.demo.Models.dto.FeatureDTO;
 import com.example.demo.Models.dto.RoomDTO;
+import com.example.demo.Models.dto.RoomFeatureDTO;
 import com.example.demo.repository.ReservationRepository;
 import com.example.demo.repository.RoomRepository;
+import com.example.demo.repository.RoomFeatureMappingRepository;
 
 @Service
 public class RoomService {
     private final RoomRepository roomRepository;
     private final ReservationRepository reservationRepository;
+    private final RoomFeatureMappingRepository roomFeatureMappingRepository;
 
     @Autowired
-    public RoomService(RoomRepository roomRepository, ReservationRepository reservationRepository) {
+    public RoomService(RoomRepository roomRepository, ReservationRepository reservationRepository,
+            RoomFeatureMappingRepository roomFeatureMappingRepository) {
         this.roomRepository = roomRepository;
         this.reservationRepository = reservationRepository;
+        this.roomFeatureMappingRepository = roomFeatureMappingRepository;
     }
 
     public List<RoomDTO> getAll(){
-        return roomRepository.getAll();
+        List<RoomDTO> roomDTOs =  roomRepository.getAll();
+
+        for(RoomDTO roomDTO: roomDTOs){
+            List<FeatureDTO> featureDTOs = roomFeatureMappingRepository.findByRoomId(roomDTO.getId())
+                .stream()
+                .map(x -> new FeatureDTO(
+                    x.getRoomFeature().getId(),
+                    x.getRoomFeature().getName(),
+                    x.getRoomFeature().getDescription(),
+                    x.getQuantity()
+                ))
+                .collect(Collectors.toList());
+            roomDTO.setFeature(featureDTOs);
+        }
+
+        return roomDTOs;
     }
 
     public RoomDTO get(Integer id){
-        return roomRepository.get(id);
+        RoomDTO roomDTO = roomRepository.get(id);
+
+        List<FeatureDTO> featureDTOs = roomFeatureMappingRepository.findByRoomId(roomDTO.getId())
+            .stream()
+            .map(x -> new FeatureDTO(
+                x.getRoomFeature().getId(),
+                x.getRoomFeature().getName(),
+                x.getRoomFeature().getDescription(),
+                x.getQuantity()
+            ))
+            .collect(Collectors.toList());
+        roomDTO.setFeature(featureDTOs);
+        return roomDTO;
     }
 
     public Boolean save(RoomDTO roomdto){
