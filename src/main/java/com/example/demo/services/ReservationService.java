@@ -10,6 +10,7 @@ import com.example.demo.Models.Employee;
 import com.example.demo.Models.Reservation;
 import com.example.demo.Models.Room;
 import com.example.demo.Models.dto.ReservationDTO;
+import com.example.demo.Models.dto.ReservationListDTO;
 import com.example.demo.repository.EmployeeRepository;
 import com.example.demo.repository.ReservationRepository;
 import com.example.demo.repository.RoomRepository;
@@ -27,7 +28,7 @@ public class ReservationService {
         this.roomRepository = roomRepository;
     }
 
-    public List<ReservationDTO> getAll() {
+    public List<ReservationListDTO> getAll() {
         return reservationRepository.getAll();
     }
 
@@ -35,7 +36,7 @@ public class ReservationService {
         return reservationRepository.get(id);
     }
 
-    public List<ReservationDTO> getByReservedById(Integer id){
+    public List<ReservationListDTO> getByReservedById(Integer id){
         return reservationRepository.getByReservedById(id);
     }
 

@@ -8,16 +8,17 @@ import org.springframework.stereotype.Repository;
 
 import com.example.demo.Models.Reservation;
 import com.example.demo.Models.dto.ReservationDTO;
+import com.example.demo.Models.dto.ReservationListDTO;
 
 @Repository
 public interface ReservationRepository extends JpaRepository<Reservation, Integer>{
     @Query("""
             SELECT 
-                new com.example.demo.Models.dto.ReservationDTO(
+                new com.example.demo.Models.dto.ReservationListDTO(
                     r.id, 
-                    r.reservedBy.id, 
-                    r.reviewedBy.id,
-                    r.room.id,  
+                    r.reservedBy.name, 
+                    r.reviewedBy.name,
+                    r.room.name,  
                     r.purpose,
                     r.startDateTime,
                     r.endDateTime,
@@ -28,7 +29,7 @@ public interface ReservationRepository extends JpaRepository<Reservation, Intege
             FROM
                     Reservation r
             """)
-    public List<ReservationDTO> getAll();
+    public List<ReservationListDTO> getAll();
     
     @Query("""
             SELECT 
@@ -53,11 +54,11 @@ public interface ReservationRepository extends JpaRepository<Reservation, Intege
 
     @Query("""
             SELECT 
-                new com.example.demo.Models.dto.ReservationDTO(
+                new com.example.demo.Models.dto.ReservationListDTO(
                     r.id, 
-                    r.reservedBy.id, 
-                    r.reviewedBy.id,
-                    r.room.id,  
+                    r.reservedBy.name, 
+                    r.reviewedBy.name,
+                    r.room.name,  
                     r.purpose,
                     r.startDateTime,
                     r.endDateTime,
@@ -70,5 +71,5 @@ public interface ReservationRepository extends JpaRepository<Reservation, Intege
             WHERE
                     r.reservedBy.id = ?1
             """)
-    public List<ReservationDTO> getByReservedById(Integer id);
+    public List<ReservationListDTO> getByReservedById(Integer id);
 } 

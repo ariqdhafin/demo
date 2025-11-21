@@ -46,14 +46,8 @@ public class UserService {
         user.setUsername(userDTO.getUsername());
         user.setPassword(userDTO.getPassword());
 
-        if (userDTO.getRoleId() != null) {
-            Role role = roleRepository.findById(userDTO.getRoleId()).orElse(null);
-            if (role == null) {
-                return false; 
-            }
-            user.setRole(role);
-        }
-
+        user.setRole(roleRepository.findById(1).orElse(null));
+        
         Employee employee = employeeRepository.findById(userDTO.getEmployeeId()).orElse(null);
         if (employee == null) {
             return false; 

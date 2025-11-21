@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.Models.dto.ReservationDTO;
+import com.example.demo.Models.dto.ReservationListDTO;
 import com.example.demo.Models.dto.ResponseDTO;
 import com.example.demo.services.ReservationService;
 
@@ -26,13 +27,13 @@ public class ReservationAPI {
 
     @GetMapping
     public ResponseEntity<?> getAll(){
-        List<ReservationDTO> reservationDTO = reservationService.getAll();
+        List<ReservationListDTO> reservationListDTO = reservationService.getAll();
 
-        if(reservationDTO == null){
+        if(reservationListDTO == null){
             return ResponseEntity.status(404).body(new ResponseDTO<>("error","Data tidak ditemukan",null));
         }
 
-        return ResponseEntity.status(200).body(new ResponseDTO<>("success","Data ditemukan",reservationDTO));
+        return ResponseEntity.status(200).body(new ResponseDTO<>("success","Data ditemukan",reservationListDTO));
     }
 
     @GetMapping("/{id}")
@@ -54,13 +55,13 @@ public class ReservationAPI {
         @PathVariable Integer id
     )
     {
-        List<ReservationDTO> reservationDTO = reservationService.getByReservedById(id);
+        List<ReservationListDTO> reservationListDTO = reservationService.getByReservedById(id);
 
-        if(reservationDTO == null){
+        if(reservationListDTO == null){
             return ResponseEntity.status(404).body(new ResponseDTO<>("error","Data tidak ditemukan",null));
         }
 
-        return ResponseEntity.status(200).body(new ResponseDTO<>("success","Data ditemukan",reservationDTO));
+        return ResponseEntity.status(200).body(new ResponseDTO<>("success","Data ditemukan",reservationListDTO));
     }
 
     @PostMapping
